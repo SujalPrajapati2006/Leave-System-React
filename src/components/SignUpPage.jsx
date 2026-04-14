@@ -3,7 +3,7 @@ import { Mail, Lock, User, Eye, EyeOff, Calendar, CheckCircle2, LayoutGrid, Shie
 import { useNavigate } from "react-router-dom";
 import authApi from "../api/authApi";
 import "./SignUpPage.css";
-import { startOAuthFlow } from "../utils/oauthProviders";
+import { startOAuthFlow } from "../utils/OauthProviders";
 
 const features = [
   { icon: LayoutGrid, text: "Instant leave approvals" },
