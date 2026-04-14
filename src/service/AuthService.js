@@ -3,12 +3,12 @@ import { API_ENDPOINTS, getAuthHeaders } from './apiConfig';
 export const authService = {
 
   login: async (email, password) => {
-    const response = await fetch(API_ENDPOINTS.AUTH.LOGIN, {
+    const response = await fetchWithTimeout(API_ENDPOINTS.AUTH.LOGIN, {
       method: 'POST',
       credentials: 'include',           // ✅ receive HttpOnly cookie
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ email, password }),
-    });
+    },60000);
 
     const data = await response.json();
     if (!response.ok) throw new Error(data.error || 'Login failed');
@@ -20,12 +20,12 @@ export const authService = {
   },
 
   signup: async (userData) => {
-    const response = await fetch(API_ENDPOINTS.AUTH.SIGNUP, {
+    const response = await fetchWithTimeout(API_ENDPOINTS.AUTH.SIGNUP, {
       method: 'POST',
       credentials: 'include',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(userData),
-    });
+    },60000);
 
     const data = await response.json();
     if (!response.ok) throw new Error(data.error || 'Sign up failed');
