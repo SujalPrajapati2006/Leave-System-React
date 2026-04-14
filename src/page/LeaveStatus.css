@@ -1,0 +1,109 @@
+.leave-status-container {
+  padding: 24px;
+}
+
+.page-header h2 {
+  margin: 0;
+}
+
+.page-header p {
+  color: #777;
+}
+
+.filters {
+  display: flex;
+  gap: 10px;
+  margin: 20px 0;
+}
+
+.filters button {
+  padding: 6px 12px;
+  border-radius: 6px;
+  border: 1px solid #ddd;
+  background: white;
+  cursor: pointer;
+}
+
+.filters button.active {
+  background: #2563eb;
+  color: white;
+}
+
+.filters input {
+  margin-left: auto;
+  padding: 6px 12px;
+  border-radius: 6px;
+  border: 1px solid #ddd;
+}
+
+.leave-list {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+.leave-card {
+  background: white;
+  padding: 16px;
+  border-radius: 10px;
+  border: 1px solid #eee;
+}
+
+.leave-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.status {
+  padding: 4px 8px;
+  border-radius: 6px;
+  font-size: 12px;
+}
+
+.status.pending {
+  background: #fff7ed;
+  color: #f59e0b;
+}
+
+.status.approved {
+  background: #ecfdf5;
+  color: #10b981;
+}
+
+.status.rejected {
+  background: #fef2f2;
+  color: #ef4444;
+}
+
+.status.cancelled {
+  background: #f3f4f6;
+  color: #6b7280;
+}
+
+.leave-body {
+  display: flex;
+  gap: 20px;
+  margin-top: 10px;
+}
+
+.leave-reason {
+  margin-top: 10px;
+  color: #555;
+}
+
+.cancel-btn {
+  margin-top: 10px;
+  padding: 6px 12px;
+  background: #ef4444;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+}
+
+.empty {
+  text-align: center;
+  padding: 40px;
+  color: #777;
+}

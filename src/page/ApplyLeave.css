@@ -1,0 +1,97 @@
+.apply-leave-container {
+  padding: 24px;
+}
+
+.apply-header h2 {
+  margin: 0;
+  font-size: 22px;
+}
+
+.apply-header p {
+  color: #777;
+  margin-top: 4px;
+}
+
+.apply-card {
+  margin-top: 20px;
+  background: white;
+  padding: 20px;
+  border-radius: 12px;
+  border: 1px solid #eee;
+}
+
+.form-group {
+  margin-bottom: 20px;
+}
+
+.form-group label {
+  font-weight: 600;
+  font-size: 13px;
+  display: block;
+  margin-bottom: 6px;
+}
+
+.leave-types {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+  gap: 10px;
+}
+
+.leave-type {
+  padding: 12px;
+  border-radius: 8px;
+  border: 1px solid #eee;
+  background: white;
+  cursor: pointer;
+  text-align: left;
+}
+
+.leave-type.active {
+  border: 2px solid #3b82f6;
+  background: #f0f6ff;
+}
+
+.leave-type span {
+  display: block;
+  font-weight: 600;
+}
+
+.leave-type small {
+  color: #777;
+}
+
+.date-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+}
+
+input,
+textarea {
+  width: 100%;
+  padding: 10px;
+  border-radius: 8px;
+  border: 1px solid #ddd;
+  font-family: inherit;
+}
+
+.submit-btn {
+  background: #2563eb;
+  color: white;
+  border: none;
+  padding: 12px;
+  border-radius: 8px;
+  width: 100%;
+  cursor: pointer;
+  font-weight: 600;
+}
+
+.submit-btn:hover {
+  background: #1e4ed8;
+}
+
+.error {
+  color: red;
+  font-size: 12px;
+  margin-top: 4px;
+}

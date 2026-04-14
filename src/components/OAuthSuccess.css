@@ -1,0 +1,121 @@
+/* OAuthSuccess.css */
+
+.oauth-root {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #f4f4f0;
+}
+
+.oauth-card {
+  background: #fff;
+  border-radius: 20px;
+  padding: 48px 40px;
+  width: 100%;
+  max-width: 400px;
+  box-shadow: 0 4px 40px rgba(0, 0, 0, 0.08);
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 32px;
+}
+
+/* ── Brand ── */
+.oauth-brand {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.oauth-brand-icon {
+  width: 36px;
+  height: 36px;
+  border-radius: 10px;
+  background: #1a1a1a;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.oauth-brand-name {
+  font-size: 1.1rem;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  color: #1a1a1a;
+}
+
+/* ── States ── */
+.oauth-state {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+}
+
+.oauth-heading {
+  font-size: 1.4rem;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  color: #1a1a1a;
+  margin: 0;
+}
+
+.oauth-label {
+  font-size: 0.875rem;
+  color: #666;
+  margin: 0;
+}
+
+.oauth-label--error {
+  color: #c0392b;
+}
+
+/* ── Spinner ── */
+.oauth-spinner {
+  width: 48px;
+  height: 48px;
+  border: 3px solid #e0e0e0;
+  border-top-color: #1a1a1a;
+  border-radius: 50%;
+  animation: oauth-spin 0.75s linear infinite;
+}
+
+@keyframes oauth-spin {
+  to { transform: rotate(360deg); }
+}
+
+/* ── Icons ── */
+.oauth-icon--success {
+  color: #27ae60;
+  animation: oauth-pop 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+.oauth-icon--error {
+  color: #c0392b;
+  animation: oauth-pop 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+@keyframes oauth-pop {
+  from { transform: scale(0.5); opacity: 0; }
+  to   { transform: scale(1);   opacity: 1; }
+}
+
+/* ── Retry button ── */
+.oauth-retry-btn {
+  margin-top: 8px;
+  padding: 10px 24px;
+  background: #1a1a1a;
+  color: #fff;
+  border: none;
+  border-radius: 8px;
+  font-size: 0.875rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+
+.oauth-retry-btn:hover {
+  background: #333;
+}
