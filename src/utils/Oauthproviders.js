@@ -1,5 +1,6 @@
-const API_BASE_URL =
-  import.meta.env.VITE_API_BASE_URL;
+const API_BASE_URL = import.meta.env.VITE_API_URL;
+
+console.log("API:", import.meta.env.VITE_API_URL);
 
 export function startOAuthFlow(provider) {
   window.location.href = `${API_BASE_URL}/oauth2/authorization/${provider}`;
