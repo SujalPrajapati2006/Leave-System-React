@@ -100,6 +100,13 @@ export default function Dashboard() {
     },
   ];
 
+    const PAGE_META = {
+      home:    { title: "Dashboard",     subtitle: `Welcome back, ${user.name} — here's your leave overview` },
+      apply:   { title: "Apply Leave",   subtitle: "Submit your leave request" },
+      status:  { title: "Leave Status",  subtitle: "Track all your leave requests" },
+      history: { title: "Leave History", subtitle: "A complete record of all your past leave applications" },
+      support: { title: "Help & Support",subtitle: "Get help and find answers" },
+    };
   return (
     <div className="root">
       {/* Sidebar */}
@@ -142,24 +149,17 @@ export default function Dashboard() {
       {/* Main */}
       <div className="main">
         {/* Header */}
-        <header className="header">
-          <div>
-            <h1 className="page-title">Dashboard</h1>
-            <p className="page-subtitle">
-              Welcome back, {user.name} — here's your leave overview
-            </p>
-          </div>
-          <div className="header-actions">
-            <NotificationBell />
-
-                <button className="icon-btn">
-                  <UserIcon size={16} color="#9ca3af" />
-                </button>
-                <button className="icon-btn">
-                  <DotsIcon size={16} color="#9ca3af" />
-                </button>
-              </div>
-            </header>
+       <header className="header">
+         <div>
+           <h1 className="page-title">{PAGE_META[activeMenu].title}</h1>
+           <p className="page-subtitle">{PAGE_META[activeMenu].subtitle}</p>
+         </div>
+         <div className="header-actions">
+           <NotificationBell />
+           <button className="icon-btn"><UserIcon size={16} color="#9ca3af" /></button>
+           <button className="icon-btn"><DotsIcon size={16} color="#9ca3af" /></button>
+         </div>
+       </header>
 
         {/* Content */}
         <main className="content">
