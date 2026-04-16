@@ -2,8 +2,8 @@ import React, { useState } from "react";
 import { Mail, Lock, Eye, EyeOff, Calendar, CheckCircle2, LayoutGrid, Shield } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
-import authApi from "../api/authApi";
-import { startOAuthFlow } from "../utils/Oauthproviders";
+import authApi from "../../api/authApi";
+import { startOAuthFlow } from "../../utils/Oauthproviders";
 import "./LoginPage.css";
 
 const features = [

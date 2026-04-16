@@ -1,9 +1,9 @@
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import NotificationBell from "../components/NotificationBell";
-import ApplyLeave from "./ApplyLeave";
-import LeaveStatus from "./LeaveStatus";
-import LeaveHistory from "./LeaveHistory";
+import NotificationBell from "../../components/layout/NotificationBell";
+import ApplyLeave from "../ApplyLeave/ApplyLeave";
+import LeaveStatus from "../LeaveStatus/LeaveStatus";
+import LeaveHistory from "../LeaveHistory/LeaveHistory";
 import "./Dashboard.css";
 
 const CircleProgress = ({ percent, color, size = 56, stroke = 4 }) => {

@@ -1,9 +1,9 @@
 import React, { useState } from "react";
 import { Mail, Lock, User, Eye, EyeOff, Calendar, CheckCircle2, LayoutGrid, Shield } from "lucide-react";
 import { useNavigate } from "react-router-dom";
-import authApi from "../api/authApi";
+import authApi from "../../api/authApi";
 import "./SignUpPage.css";
-import { startOAuthFlow } from "../utils/Oauthproviders";
+import { startOAuthFlow } from "../../utils/Oauthproviders";
 
 const features = [
   { icon: LayoutGrid, text: "Instant leave approvals" },
