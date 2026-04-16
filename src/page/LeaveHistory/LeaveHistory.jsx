@@ -348,18 +348,6 @@ export default function LeaveHistory() {
   return (
     <div className={`lh-wrap${mounted ? " lh-mounted" : ""}`}>
 
-      {/* ── Page Header ── */}
-      <div className="lh-page-header">
-        <div>
-          <h2 className="lh-page-title">Leave History</h2>
-          <p className="lh-page-sub">A complete record of all your past leave applications</p>
-        </div>
-        <button className="lh-export-btn" onClick={handleExport}>
-          <DownloadIcon size={14} color="#fff" />
-          Export CSV
-        </button>
-      </div>
-
       {/* ── Year Tabs ── */}
       <div className="lh-year-tabs">
         {YEARS.map(y => (

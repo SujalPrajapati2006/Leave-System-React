@@ -46,9 +46,9 @@ const SAMPLE_NOTIFICATIONS = [
 ];
 
 // ── Icons ──
-const BellIcon = ({ size = 16, color = "#9ca3af" }) => (
+const BellIcon = ({ size = 16, color = "currentColor" }) => (
   <svg width={size} height={size} viewBox="0 0 24 24" fill="none"
-    stroke={color} strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+    stroke={color} strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
     <path d="M18 8A6 6 0 006 8c0 7-3 9-3 9h18s-3-2-3-9" />
     <path d="M13.73 21a2 2 0 01-3.46 0" />
   </svg>
@@ -94,56 +94,41 @@ const ICON_MAP = {
 };
 
 export default function NotificationBell() {
-  const [open, setOpen] = useState(false);
+  const [open, setOpen]                   = useState(false);
   const [notifications, setNotifications] = useState(SAMPLE_NOTIFICATIONS);
   const ref = useRef(null);
 
-  const unreadCount = notifications.filter((n) => !n.read).length;
+  const unreadCount = notifications.filter(n => !n.read).length;
 
   // Close on outside click
   useEffect(() => {
-    const handler = (e) => {
-      if (ref.current && !ref.current.contains(e.target)) {
-        setOpen(false);
-      }
-    };
+    const handler = e => { if (ref.current && !ref.current.contains(e.target)) setOpen(false); };
     document.addEventListener("mousedown", handler);
     return () => document.removeEventListener("mousedown", handler);
   }, []);
 
   // Close on Escape
   useEffect(() => {
-    const handler = (e) => { if (e.key === "Escape") setOpen(false); };
+    const handler = e => { if (e.key === "Escape") setOpen(false); };
     document.addEventListener("keydown", handler);
     return () => document.removeEventListener("keydown", handler);
   }, []);
 
-  const markAllRead = () => {
-    setNotifications((prev) => prev.map((n) => ({ ...n, read: true })));
-  };
-
-  const markRead = (id) => {
-    setNotifications((prev) =>
-      prev.map((n) => (n.id === id ? { ...n, read: true } : n))
-    );
-  };
-
-  const dismiss = (e, id) => {
-    e.stopPropagation();
-    setNotifications((prev) => prev.filter((n) => n.id !== id));
-  };
+  const markAllRead = () => setNotifications(prev => prev.map(n => ({ ...n, read: true })));
+  const markRead    = id => setNotifications(prev => prev.map(n => n.id === id ? { ...n, read: true } : n));
+  const dismiss     = (e, id) => { e.stopPropagation(); setNotifications(prev => prev.filter(n => n.id !== id)); };
 
   return (
     <div className="nb-root" ref={ref}>
-      {/* ── Bell Button ── */}
+      {/* Bell Button */}
       <button
         className={`nb-trigger icon-btn${open ? " nb-trigger--open" : ""}`}
-        onClick={() => setOpen((v) => !v)}
+        onClick={() => setOpen(v => !v)}
         aria-label={`Notifications${unreadCount > 0 ? `, ${unreadCount} unread` : ""}`}
         aria-expanded={open}
         aria-haspopup="true"
       >
-        <BellIcon size={16} color={open ? "#fff" : "#9ca3af"} />
+        <BellIcon size={16} color={open ? "var(--dash-text, #1a1916)" : "currentColor"} />
         {unreadCount > 0 && (
           <span className="nb-badge" aria-hidden="true">
             {unreadCount > 9 ? "9+" : unreadCount}
@@ -151,13 +136,9 @@ export default function NotificationBell() {
         )}
       </button>
 
-      {/* ── Dropdown Panel ── */}
+      {/* Dropdown Panel */}
       {open && (
-        <div
-          className="nb-panel"
-          role="dialog"
-          aria-label="Notifications"
-        >
+        <div className="nb-panel" role="dialog" aria-label="Notifications">
           {/* Header */}
           <div className="nb-header">
             <div className="nb-header-left">
@@ -167,9 +148,7 @@ export default function NotificationBell() {
               )}
             </div>
             {unreadCount > 0 && (
-              <button className="nb-mark-all" onClick={markAllRead}>
-                Mark all read
-              </button>
+              <button className="nb-mark-all" onClick={markAllRead}>Mark all read</button>
             )}
           </div>
 
@@ -177,9 +156,7 @@ export default function NotificationBell() {
           <ul className="nb-list" role="list">
             {notifications.length === 0 ? (
               <li className="nb-empty">
-                <span className="nb-empty-icon">
-                  <BellIcon size={24} color="#4b5563" />
-                </span>
+                <span className="nb-empty-icon"><BellIcon size={24} color="#4b5563" /></span>
                 <span>You're all caught up!</span>
               </li>
             ) : (
@@ -193,26 +170,15 @@ export default function NotificationBell() {
                     onClick={() => markRead(n.id)}
                     role="listitem"
                   >
-                    {/* Type icon */}
-                    <span className={`nb-type-icon nb-type-icon--${n.type}`}>
-                      <TypeIcon />
-                    </span>
-
-                    {/* Text */}
+                    <span className={`nb-type-icon nb-type-icon--${n.type}`}><TypeIcon /></span>
                     <div className="nb-item-body">
                       <span className="nb-item-title">{n.title}</span>
                       <span className="nb-item-msg">{n.message}</span>
                       <span className="nb-item-time">{n.time}</span>
                     </div>
-
-                    {/* Unread dot + dismiss */}
                     <div className="nb-item-end">
                       {!n.read && <span className="nb-dot" aria-label="Unread" />}
-                      <button
-                        className="nb-dismiss"
-                        onClick={(e) => dismiss(e, n.id)}
-                        aria-label="Dismiss notification"
-                      >
+                      <button className="nb-dismiss" onClick={e => dismiss(e, n.id)} aria-label="Dismiss notification">
                         <svg width="12" height="12" viewBox="0 0 24 24" fill="none"
                           stroke="currentColor" strokeWidth="2.5" strokeLinecap="round">
                           <line x1="18" y1="6" x2="6" y2="18" />

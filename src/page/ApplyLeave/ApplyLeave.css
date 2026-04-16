@@ -1,97 +1,382 @@
-.apply-leave-container {
+/* ══════════════════════════════════════════
+   ApplyLeave.css  —  LeaveOS Design System
+   ══════════════════════════════════════════ */
+
+:root {
+  --al-surface:    #ffffff;
+  --al-surface2:   #f0efe9;
+  --al-border:     #e4e2da;
+  --al-text:       #1a1916;
+  --al-text2:      #6b6860;
+  --al-text3:      #a8a59f;
+  --al-accent:     #2563eb;
+  --al-accent-bg:  #eff4ff;
+  --al-green:      #059669;
+  --al-green-bg:   #ecfdf5;
+  --al-red:        #dc2626;
+  --al-red-bg:     #fef2f2;
+  --al-amber:      #d97706;
+  --al-amber-bg:   #fffbeb;
+  --al-radius:     12px;
+  --al-radius-sm:  8px;
+  --al-shadow:     0 1px 3px rgba(0,0,0,.06), 0 1px 2px rgba(0,0,0,.04);
+}
+
+/* ── Page Layout (Two-Column) ── */
+.al-page-layout {
+  display: grid;
+  grid-template-columns: 1fr 288px;
+  gap: 20px;
+  align-items: start;
+  font-family: 'DM Sans', 'Segoe UI', sans-serif;
+}
+
+.al-form-section {
+  min-width: 0;
+}
+
+/* ── Success Banner ── */
+.al-success-banner {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  background: var(--al-green-bg);
+  border: 1px solid #6ee7b7;
+  border-radius: var(--al-radius-sm);
+  padding: 14px 16px;
+  margin-bottom: 20px;
+  font-size: 13.5px;
+  color: var(--al-green);
+  font-weight: 500;
+  animation: alFadeIn 0.25s ease;
+}
+
+@keyframes alFadeIn {
+  from { opacity: 0; transform: translateY(-6px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+.al-close-btn {
+  margin-left: auto;
+  background: none;
+  border: none;
+  cursor: pointer;
+  color: var(--al-green);
+  display: flex;
+  align-items: center;
+  padding: 0;
+  opacity: 0.7;
+  transition: opacity 0.15s;
+}
+.al-close-btn:hover { opacity: 1; }
+
+/* ── Form Card ── */
+.al-form-card {
+  background: var(--al-surface);
+  border: 1px solid var(--al-border);
+  border-radius: var(--al-radius);
   padding: 24px;
+  box-shadow: var(--al-shadow);
 }
 
-.apply-header h2 {
-  margin: 0;
-  font-size: 22px;
+/* ── Form Fields ── */
+.al-form-field {
+  margin-bottom: 18px;
 }
 
-.apply-header p {
-  color: #777;
+.al-form-label {
+  display: block;
+  font-size: 12.5px;
+  font-weight: 500;
+  color: var(--al-text2);
+  margin-bottom: 7px;
+}
+
+.al-form-input {
+  width: 100%;
+  padding: 10px 14px;
+  border: 1.5px solid var(--al-border);
+  border-radius: var(--al-radius-sm);
+  font-family: 'DM Sans', 'Segoe UI', sans-serif;
+  font-size: 14px;
+  background: var(--al-surface);
+  color: var(--al-text);
+  outline: none;
+  transition: border-color 0.15s;
+  box-sizing: border-box;
+}
+.al-form-input:focus { border-color: var(--al-text); }
+.al-form-input.error { border-color: var(--al-red); }
+
+.al-form-textarea {
+  resize: vertical;
+  min-height: 100px;
+}
+
+.al-err-msg {
+  font-size: 11.5px;
+  color: var(--al-red);
   margin-top: 4px;
 }
 
-.apply-card {
-  margin-top: 20px;
-  background: white;
-  padding: 20px;
-  border-radius: 12px;
-  border: 1px solid #eee;
-}
-
-.form-group {
-  margin-bottom: 20px;
-}
-
-.form-group label {
-  font-weight: 600;
-  font-size: 13px;
-  display: block;
-  margin-bottom: 6px;
-}
-
-.leave-types {
+/* ── Leave Type Grid ── */
+.al-leave-type-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+  grid-template-columns: repeat(4, 1fr);
+  gap: 10px;
+  margin-bottom: 4px;
+}
+
+.al-lt-btn {
+  border: 1.5px solid var(--al-border);
+  border-radius: var(--al-radius-sm);
+  padding: 14px 12px;
+  background: transparent;
+  cursor: pointer;
+  text-align: left;
+  transition: all 0.15s;
+  font-family: 'DM Sans', 'Segoe UI', sans-serif;
+}
+.al-lt-btn:hover {
+  border-color: var(--al-text);
+  background: var(--al-surface2);
+}
+.al-lt-btn.selected {
+  border-color: var(--al-text);
+  background: var(--al-text);
+  color: #fff;
+}
+.al-lt-btn.selected .al-lt-days { color: rgba(255,255,255,.65); }
+
+.al-lt-name {
+  font-size: 13px;
+  font-weight: 500;
+  margin-bottom: 4px;
+}
+.al-lt-days {
+  font-size: 11px;
+  color: var(--al-text2);
+}
+
+/* ── Date Row ── */
+.al-date-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+}
+
+/* ── Days Preview ── */
+.al-days-preview {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  background: var(--al-accent-bg);
+  border: 1px solid #bfdbfe;
+  border-radius: var(--al-radius-sm);
+  padding: 10px 14px;
+  font-size: 13px;
+  color: var(--al-accent);
+  font-weight: 500;
+  margin-bottom: 18px;
+}
+
+/* ── Submit Button ── */
+.al-submit-btn {
+  width: 100%;
+  padding: 13px;
+  background: var(--al-text);
+  color: #fff;
+  border: none;
+  border-radius: var(--al-radius-sm);
+  font-family: 'DM Sans', 'Segoe UI', sans-serif;
+  font-size: 14px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: opacity 0.15s;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+}
+.al-submit-btn:disabled { opacity: 0.55; cursor: not-allowed; }
+.al-submit-btn:hover:not(:disabled) { opacity: 0.85; }
+
+/* ── Spinner ── */
+@keyframes alSpin { to { transform: rotate(360deg); } }
+.al-spinner {
+  width: 16px;
+  height: 16px;
+  border: 2px solid rgba(255,255,255,.3);
+  border-top-color: #fff;
+  border-radius: 50%;
+  animation: alSpin 0.6s linear infinite;
+  flex-shrink: 0;
+}
+
+/* ══════════════════════════════════════════
+   SIDEBAR
+   ══════════════════════════════════════════ */
+
+.al-sidebar {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  position: sticky;
+  top: 16px;
+}
+
+.al-sidebar-card {
+  background: var(--al-surface);
+  border: 1px solid var(--al-border);
+  border-radius: var(--al-radius);
+  padding: 18px 20px;
+  box-shadow: var(--al-shadow);
+}
+
+.al-sidebar-title {
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--al-text);
+  margin-bottom: 14px;
+  letter-spacing: 0.01em;
+}
+
+/* ── Leave Balance ── */
+.al-balance-list {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.al-bal-row {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+
+.al-bal-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+}
+
+.al-bal-label {
+  font-size: 12.5px;
+  color: var(--al-text);
+  font-weight: 500;
+}
+
+.al-bal-count {
+  font-size: 11.5px;
+  color: var(--al-text2);
+}
+
+.al-bal-count strong {
+  color: var(--al-text);
+  font-weight: 600;
+}
+
+.al-bal-track {
+  height: 5px;
+  background: var(--al-surface2);
+  border-radius: 3px;
+  overflow: hidden;
+}
+
+.al-bal-fill {
+  height: 100%;
+  border-radius: 3px;
+  transition: width 0.5s ease;
+}
+
+.al-bal-meta {
+  font-size: 11px;
+  color: var(--al-text3);
+}
+
+/* ── Recent Applications ── */
+.al-recent-list {
+  display: flex;
+  flex-direction: column;
+}
+
+.al-recent-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px 0;
+  border-bottom: 1px solid var(--al-border);
+}
+.al-recent-item:last-child { border-bottom: none; }
+
+.al-recent-type {
+  font-size: 12.5px;
+  font-weight: 500;
+  color: var(--al-text);
+  margin-bottom: 2px;
+}
+
+.al-recent-dates {
+  font-size: 11px;
+  color: var(--al-text2);
+}
+
+.al-status-pill {
+  font-size: 11px;
+  font-weight: 500;
+  padding: 3px 9px;
+  border-radius: 100px;
+  white-space: nowrap;
+}
+
+.al-status-approved {
+  background: var(--al-green-bg);
+  color: var(--al-green);
+}
+
+.al-status-pending {
+  background: var(--al-amber-bg);
+  color: var(--al-amber);
+}
+
+/* ── Quick Stats ── */
+.al-stats-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
   gap: 10px;
 }
 
-.leave-type {
+.al-stat-item {
+  background: var(--al-surface2);
+  border-radius: var(--al-radius-sm);
   padding: 12px;
-  border-radius: 8px;
-  border: 1px solid #eee;
-  background: white;
-  cursor: pointer;
-  text-align: left;
 }
 
-.leave-type.active {
-  border: 2px solid #3b82f6;
-  background: #f0f6ff;
-}
-
-.leave-type span {
-  display: block;
+.al-stat-value {
+  font-size: 22px;
   font-weight: 600;
+  color: var(--al-text);
+  line-height: 1;
+  margin-bottom: 4px;
 }
 
-.leave-type small {
-  color: #777;
+.al-stat-label {
+  font-size: 11px;
+  color: var(--al-text2);
 }
 
-.date-row {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 12px;
+/* ── Responsive ── */
+@media (max-width: 900px) {
+  .al-page-layout {
+    grid-template-columns: 1fr;
+  }
+  .al-sidebar {
+    position: static;
+  }
 }
 
-input,
-textarea {
-  width: 100%;
-  padding: 10px;
-  border-radius: 8px;
-  border: 1px solid #ddd;
-  font-family: inherit;
-}
-
-.submit-btn {
-  background: #2563eb;
-  color: white;
-  border: none;
-  padding: 12px;
-  border-radius: 8px;
-  width: 100%;
-  cursor: pointer;
-  font-weight: 600;
-}
-
-.submit-btn:hover {
-  background: #1e4ed8;
-}
-
-.error {
-  color: red;
-  font-size: 12px;
-  margin-top: 4px;
+@media (max-width: 560px) {
+  .al-leave-type-grid { grid-template-columns: repeat(2, 1fr); }
+  .al-date-row { grid-template-columns: 1fr; }
+  .al-stats-grid { grid-template-columns: repeat(2, 1fr); }
 }

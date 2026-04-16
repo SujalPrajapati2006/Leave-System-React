@@ -1,109 +1,232 @@
-.leave-status-container {
-  padding: 24px;
+/* ══════════════════════════════════════════
+   LeaveStatus.css  —  LeaveOS Design System
+   ══════════════════════════════════════════ */
+
+/* ── Variables (mirrors App.jsx tokens) ── */
+:root {
+  --ls-surface:   #ffffff;
+  --ls-surface2:  #f0efe9;
+  --ls-border:    #e4e2da;
+  --ls-text:      #1a1916;
+  --ls-text2:     #6b6860;
+  --ls-text3:     #a8a59f;
+  --ls-accent:    #2563eb;
+  --ls-green:     #059669;
+  --ls-green-bg:  #ecfdf5;
+  --ls-amber:     #d97706;
+  --ls-amber-bg:  #fffbeb;
+  --ls-red:       #dc2626;
+  --ls-red-bg:    #fef2f2;
+  --ls-radius:    12px;
+  --ls-radius-sm: 8px;
+  --ls-shadow:    0 1px 3px rgba(0,0,0,.06), 0 1px 2px rgba(0,0,0,.04);
+  --ls-shadow-md: 0 4px 16px rgba(0,0,0,.08), 0 1px 4px rgba(0,0,0,.04);
 }
 
-.page-header h2 {
-  margin: 0;
+/* ── Container ── */
+.ls-container {
+  font-family: 'DM Sans', 'Segoe UI', sans-serif;
 }
 
-.page-header p {
-  color: #777;
-}
-
-.filters {
+/* ── Filter Bar ── */
+.ls-filter-bar {
   display: flex;
-  gap: 10px;
-  margin: 20px 0;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 20px;
+  flex-wrap: wrap;
 }
 
-.filters button {
-  padding: 6px 12px;
-  border-radius: 6px;
-  border: 1px solid #ddd;
-  background: white;
+.ls-filter-btn {
+  padding: 7px 14px;
+  border-radius: 99px;
+  border: 1.5px solid var(--ls-border);
+  background: transparent;
+  font-family: 'DM Sans', 'Segoe UI', sans-serif;
+  font-size: 12.5px;
+  font-weight: 500;
   cursor: pointer;
+  transition: all 0.15s ease;
+  color: var(--ls-text2);
+  text-transform: capitalize;
+}
+.ls-filter-btn:hover {
+  border-color: var(--ls-text);
+  color: var(--ls-text);
+}
+.ls-filter-btn.active {
+  background: var(--ls-text);
+  border-color: var(--ls-text);
+  color: #fff;
 }
 
-.filters button.active {
-  background: #2563eb;
-  color: white;
-}
-
-.filters input {
+/* ── Search ── */
+.ls-search-wrap {
+  position: relative;
   margin-left: auto;
-  padding: 6px 12px;
-  border-radius: 6px;
-  border: 1px solid #ddd;
-}
-
-.leave-list {
   display: flex;
-  flex-direction: column;
-  gap: 15px;
-}
-
-.leave-card {
-  background: white;
-  padding: 16px;
-  border-radius: 10px;
-  border: 1px solid #eee;
-}
-
-.leave-header {
-  display: flex;
-  justify-content: space-between;
   align-items: center;
 }
 
-.status {
-  padding: 4px 8px;
-  border-radius: 6px;
-  font-size: 12px;
+.ls-search-icon {
+  position: absolute;
+  left: 11px;
+  top: 50%;
+  transform: translateY(-50%);
+  pointer-events: none;
+  color: var(--ls-text3);
+  display: flex;
 }
 
-.status.pending {
-  background: #fff7ed;
-  color: #f59e0b;
+.ls-search-input {
+  padding: 7px 34px 7px 34px;
+  border: 1.5px solid var(--ls-border);
+  border-radius: 99px;
+  font-family: 'DM Sans', 'Segoe UI', sans-serif;
+  font-size: 13px;
+  background: var(--ls-surface);
+  color: var(--ls-text);
+  outline: none;
+  transition: border-color 0.15s;
+  width: 200px;
+}
+.ls-search-input:focus {
+  border-color: var(--ls-text);
 }
 
-.status.approved {
-  background: #ecfdf5;
-  color: #10b981;
+.ls-search-clear {
+  position: absolute;
+  right: 10px;
+  top: 50%;
+  transform: translateY(-50%);
+  background: none;
+  border: none;
+  cursor: pointer;
+  color: var(--ls-text3);
+  display: flex;
+  align-items: center;
+  padding: 0;
+  transition: color 0.15s;
+}
+.ls-search-clear:hover {
+  color: var(--ls-text);
 }
 
-.status.rejected {
-  background: #fef2f2;
-  color: #ef4444;
+/* ── Leave List ── */
+.ls-leave-list {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
 }
 
-.status.cancelled {
-  background: #f3f4f6;
-  color: #6b7280;
+/* ── Leave Card ── */
+.ls-leave-card {
+  background: var(--ls-surface);
+  border: 1px solid var(--ls-border);
+  border-radius: var(--ls-radius);
+  padding: 18px 20px;
+  box-shadow: var(--ls-shadow);
+  transition: box-shadow 0.15s;
+  animation: lsCardIn 0.3s ease both;
+}
+.ls-leave-card:hover {
+  box-shadow: var(--ls-shadow-md);
 }
 
-.leave-body {
+@keyframes lsCardIn {
+  from { opacity: 0; transform: translateY(8px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+.ls-lc-top {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  margin-bottom: 12px;
+}
+
+.ls-lc-type {
+  font-size: 14.5px;
+  font-weight: 600;
+  color: var(--ls-text);
+}
+
+.ls-lc-id {
+  font-size: 11.5px;
+  color: var(--ls-text3);
+  margin-top: 2px;
+}
+
+/* ── Badges ── */
+.ls-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  font-size: 11px;
+  font-weight: 600;
+  padding: 3px 10px;
+  border-radius: 99px;
+  white-space: nowrap;
+  font-family: 'DM Sans', 'Segoe UI', sans-serif;
+}
+.ls-badge--approved  { background: var(--ls-green-bg);  color: var(--ls-green); }
+.ls-badge--pending   { background: var(--ls-amber-bg);  color: var(--ls-amber); }
+.ls-badge--rejected  { background: var(--ls-red-bg);    color: var(--ls-red); }
+.ls-badge--cancelled { background: #f3f4f6;              color: var(--ls-text2); }
+
+/* ── Card Meta ── */
+.ls-lc-meta {
   display: flex;
   gap: 20px;
-  margin-top: 10px;
+  margin-bottom: 10px;
+  flex-wrap: wrap;
+}
+.ls-lc-meta-item {
+  font-size: 12.5px;
+  color: var(--ls-text2);
+}
+.ls-lc-meta-item strong {
+  color: var(--ls-text);
+  font-weight: 500;
 }
 
-.leave-reason {
-  margin-top: 10px;
-  color: #555;
+.ls-lc-reason {
+  font-size: 13px;
+  color: var(--ls-text2);
+  padding: 10px 12px;
+  background: var(--ls-surface2);
+  border-radius: var(--ls-radius-sm);
+  margin-bottom: 12px;
 }
 
-.cancel-btn {
-  margin-top: 10px;
-  padding: 6px 12px;
-  background: #ef4444;
-  color: white;
-  border: none;
-  border-radius: 6px;
+/* ── Cancel Button ── */
+.ls-cancel-btn {
+  padding: 7px 16px;
+  background: var(--ls-red-bg);
+  color: var(--ls-red);
+  border: 1px solid #fca5a5;
+  border-radius: var(--ls-radius-sm);
+  font-family: 'DM Sans', 'Segoe UI', sans-serif;
+  font-size: 13px;
+  font-weight: 500;
   cursor: pointer;
+  transition: all 0.15s;
+}
+.ls-cancel-btn:hover {
+  background: var(--ls-red);
+  color: #fff;
 }
 
-.empty {
+/* ── Empty State ── */
+.ls-empty {
   text-align: center;
-  padding: 40px;
-  color: #777;
+  padding: 60px 20px;
+  color: var(--ls-text3);
+}
+.ls-empty-icon {
+  font-size: 40px;
+  margin-bottom: 12px;
+}
+.ls-empty-text {
+  font-size: 14px;
 }
