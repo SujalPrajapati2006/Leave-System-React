@@ -82,7 +82,17 @@ export default function LoginPage() {
       const data = response.data;
       localStorage.setItem("accessToken", data.accessToken);
       if (data.refreshToken) localStorage.setItem("refreshToken", data.refreshToken);
-      if (data.user) localStorage.setItem("user", JSON.stringify(data.user));
+      const userToStore = {
+        name:       data.user?.fullName    ?? data.fullName    ?? "User",
+        role:       data.user?.role        ?? data.role        ?? "Employee",
+        initials:   (data.user?.fullName ?? data.fullName ?? "U")
+                      .split(" ")
+                      .map(w => w[0])
+                      .join("")
+                      .toUpperCase()
+                      .slice(0, 2),
+      };
+      localStorage.setItem("user", JSON.stringify(userToStore));
       if (formData.rememberMe) localStorage.setItem("rememberMe", "true");
       toast.success("Login successful!");
       setTimeout(() => navigate("/dashboard"), 1500);
