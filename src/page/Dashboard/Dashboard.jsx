@@ -6,7 +6,6 @@ import LeaveStatus from "../LeaveStatus/LeaveStatus";
 import LeaveHistory from "../LeaveHistory/LeaveHistory";
 import "./Dashboard.css";
 
-// ─── Circle Progress ──────────────────────────────────────────────────────────
 function CircleProgress({ percent, color, size = 60, stroke = 5 }) {
   const r    = (size - stroke) / 2;
   const circ = 2 * Math.PI * r;
@@ -37,7 +36,6 @@ function StatCard({ label, value, color, percent, animated }) {
   );
 }
 
-// ─── Icon Components ──────────────────────────────────────────────────────────
 const Ico = ({ d, size = 16, color = "currentColor", fill = "none" }) => (
   <svg width={size} height={size} viewBox="0 0 24 24" fill={fill} stroke={color}
     strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
@@ -61,7 +59,6 @@ const DotsIcon    = ({ size = 16, color }) => (
 );
 const PlusIcon = ({ size = 16, color = "#fff" }) => <Ico size={size} color={color} d={["M12 5v14","M5 12h14"]} />;
 
-// ─── Nav Config ───────────────────────────────────────────────────────────────
 const PAGE_META = {
   home:    { title: "Dashboard",      subtitle: (n) => `Welcome back, ${n} — here's your leave overview` },
   apply:   { title: "Apply Leave",    subtitle: () => "Submit your leave request" },
@@ -95,7 +92,6 @@ const SUPPORT_CARDS = [
   { icon: "📞", title: "Call Helpline", desc: "Reach the HR helpline at +91-80-1234-5678." },
 ];
 
-// ─── Dashboard ────────────────────────────────────────────────────────────────
 export default function Dashboard() {
   const navigate = useNavigate();
   const [activeMenu, setActiveMenu] = useState("home");

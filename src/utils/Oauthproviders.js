@@ -7,6 +7,6 @@ export function startOAuthFlow(provider) {
 export const OAUTH_PROVIDERS = [
   { id: "google",   label: "Google"   },
   // { id: "facebook", label: "Facebook" },
-  // { id: "github",   label: "GitHub"   },
+   { id: "github",   label: "GitHub"   },
   // { id: "linkedin", label: "LinkedIn" },
 ];
