@@ -71,14 +71,14 @@ export default function LoginPage() {
       localStorage.setItem("accessToken", data.accessToken);
       if (data.refreshToken) localStorage.setItem("refreshToken", data.refreshToken);
       const userToStore = {
-        name:       data.user?.fullName    ?? data.fullName    ?? "User",
-        role:       data.user?.role        ?? data.role        ?? "Employee",
-        initials:   (data.user?.fullName ?? data.fullName ?? "U")
-                      .split(" ")
-                      .map(w => w[0])
-                      .join("")
-                      .toUpperCase()
-                      .slice(0, 2),
+        name:     data.fullName ?? data.user?.fullName ?? "User",
+        role:     data.role     ?? data.user?.role     ?? "Employee",
+        initials: (data.fullName ?? data.user?.fullName ?? "U")
+                    .split(" ")
+                    .map(w => w[0])
+                    .join("")
+                    .toUpperCase()
+                    .slice(0, 2),
       };
       localStorage.setItem("user", JSON.stringify(userToStore));
       if (formData.rememberMe) localStorage.setItem("rememberMe", "true");

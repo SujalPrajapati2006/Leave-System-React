@@ -1,12 +1,11 @@
-import API_BASE_URL from "../api/apiConfig";
+const BACKEND_URL = import.meta.env.VITE_BACKEND_URL;
 
 export function startOAuthFlow(provider) {
-  window.location.href = `${API_BASE_URL}/oauth2/authorization/${provider}`;
+  window.location.href =
+    `${BACKEND_URL}/oauth2/authorization/${provider}`;
 }
 
 export const OAUTH_PROVIDERS = [
-  { id: "google",   label: "Google"   },
-  // { id: "facebook", label: "Facebook" },
-   { id: "github",   label: "GitHub"   },
-  // { id: "linkedin", label: "LinkedIn" },
+  { id: "google", label: "Google" },
+  { id: "github", label: "GitHub" },
 ];

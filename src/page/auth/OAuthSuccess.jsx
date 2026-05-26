@@ -39,23 +39,26 @@ export default function OAuthSuccess() {
     }
 
     try {
-      // Persist token – identical contract to email/password login
       localStorage.setItem("accessToken", token);
 
-      // Optionally decode the JWT to persist user info without an extra API call
-      const payload = JSON.parse(atob(token.split(".")[1]));
-      if (payload) {
-        localStorage.setItem(
-          "user",
-          JSON.stringify({
-            email: payload.sub ?? payload.email ?? "",
-            fullName: payload.fullName ?? payload.name ?? "",
-            role: payload.role ?? "",
-          })
-        );
-      }
-    } catch {
-      // Decoding is a nice-to-have; a malformed payload is not fatal
+      const name = searchParams.get("name");
+      const role = searchParams.get("role");
+
+      const user = {
+        name: name,
+        role: role,
+        initials: (name)
+          .split(" ")
+          .map(w => w[0])
+          .join("")
+          .toUpperCase()
+          .slice(0, 2),
+      };
+
+      localStorage.setItem("user", JSON.stringify(user));
+
+    } catch (err) {
+      console.error("OAuth storage error:", err);
     }
 
     setStatus("success");
