@@ -83,7 +83,13 @@ export default function LoginPage() {
       localStorage.setItem("user", JSON.stringify(userToStore));
       if (formData.rememberMe) localStorage.setItem("rememberMe", "true");
       toast.success("Login successful!");
-      setTimeout(() => navigate("/dashboard"), 1500);
+      setTimeout(() => {
+        if (userToStore.role === "ADMIN") {
+          navigate("/admin");
+        } else {
+          navigate("/dashboard");
+        }
+      }, 1500);
     } catch (err) {
       const data = err.response?.data;
       if (data?.errorCode === "OAUTH2_ACCOUNT") {

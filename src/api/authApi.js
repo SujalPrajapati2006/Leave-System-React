@@ -1,20 +1,22 @@
 import axios from "axios";
 import API_BASE_URL from "./apiConfig";
 
+export const authState = {
+  isLoggingOut: false,
+};
+
 const api = axios.create({
   baseURL: API_BASE_URL,
   withCredentials: true,
   headers: { "Content-Type": "application/json" },
 });
 
-// ✅ Request interceptor — attach access token
 api.interceptors.request.use((config) => {
   const token = localStorage.getItem("accessToken");
   if (token) config.headers.Authorization = `Bearer ${token}`;
   return config;
 });
 
-// ✅ Response interceptor — auto refresh on 401
 let isRefreshing = false;
 let failedQueue = [];
 
@@ -31,7 +33,9 @@ api.interceptors.response.use(
     if (
       error.response?.status === 401 &&
       !original._retry &&
-      !original.url.includes("/auth/login")
+      !original.url.includes("/auth/login") &&
+      !original.url.includes("/auth/logout") &&
+      !authState.isLoggingOut
     ) {
       if (isRefreshing) {
         return new Promise((resolve, reject) => {

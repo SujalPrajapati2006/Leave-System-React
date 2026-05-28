@@ -4,6 +4,7 @@ import NotificationBell from "../../components/layout/NotificationBell";
 import ApplyLeave from "../ApplyLeave/ApplyLeave";
 import LeaveStatus from "../LeaveStatus/LeaveStatus";
 import LeaveHistory from "../LeaveHistory/LeaveHistory";
+import authApi, { authState } from "../../api/authApi";
 import "./Dashboard.css";
 
 function CircleProgress({ percent, color, size = 60, stroke = 5 }) {
@@ -99,14 +100,19 @@ export default function Dashboard() {
   const [user, setUser] = useState({
     name: "John Doe", employeeId: "hx170000", role: "Employee", initials: "JD",
   });
-
+  const [showLogoutModal, setShowLogoutModal] = useState(false);
+  const [logoutLoading,   setLogoutLoading]   = useState(false);
   const total = 24, taken = 15, remaining = 9;
 
   useEffect(() => {
     const accessToken = localStorage.getItem("accessToken");
     if (!accessToken) { navigate("/login"); return; }
     const storedUser = localStorage.getItem("user");
-    if (storedUser) setUser(JSON.parse(storedUser));
+    if (storedUser) {
+      const parsed = JSON.parse(storedUser);
+      if (parsed.role === "ADMIN") { navigate("/admin"); return; }
+      setUser(parsed);
+    }
   }, [navigate]);
 
   useEffect(() => {
@@ -114,12 +120,27 @@ export default function Dashboard() {
     return () => clearTimeout(t);
   }, []);
 
-  const handleLogout = () => {
-    localStorage.removeItem("accessToken");
-    localStorage.removeItem("refreshToken");
-    localStorage.removeItem("user");
-    localStorage.removeItem("rememberMe");
-    navigate("/login");
+  const handleLogout = async () => {
+    setLogoutLoading(true);
+    authState.isLoggingOut = true;
+
+    try {
+      await authApi.logout();
+    } catch (_) {
+      // proceed even if API fails
+    } finally {
+
+      // ✅ clear frontend data
+      localStorage.removeItem("accessToken");
+      localStorage.removeItem("refreshToken");
+      localStorage.removeItem("user");
+      localStorage.removeItem("rememberMe");
+
+      // ✅ reset flag
+      authState.isLoggingOut = false;
+
+      navigate("/login");
+    }
   };
 
   const meta = PAGE_META[activeMenu];
@@ -158,7 +179,7 @@ export default function Dashboard() {
         </nav>
 
         <div className="dash-sidebar-bottom">
-          <button className="dash-logout-btn" onClick={handleLogout}>
+          <button className="dash-logout-btn" onClick={() => setShowLogoutModal(true)}>
             <LogoutIcon size={16} color="#dc2626" />
             <span>Logout</span>
           </button>
@@ -253,6 +274,36 @@ export default function Dashboard() {
           )}
         </main>
       </div>
+      {showLogoutModal && (
+              <div className="logout-overlay" onClick={() => setShowLogoutModal(false)}>
+                <div className="logout-modal" onClick={e => e.stopPropagation()}>
+                  <div className="logout-modal-icon">
+                    <LogoutIcon size={28} color="#dc2626" />
+                  </div>
+                  <h2 className="logout-modal-title">Sign out?</h2>
+                  <p className="logout-modal-desc">
+                    You'll be returned to the login screen. Any unsaved changes will be lost.
+                  </p>
+                  <div className="logout-modal-actions">
+                    <button
+                      className="logout-cancel-btn"
+                      onClick={() => setShowLogoutModal(false)}
+                      disabled={logoutLoading}
+                    >
+                      Cancel
+                    </button>
+                    <button
+                      className="logout-confirm-btn"
+                      onClick={handleLogout}
+                      disabled={logoutLoading}
+                    >
+                      {logoutLoading && <span className="logout-spinner" />}
+                      {logoutLoading ? "Signing out…" : "Yes, sign out"}
+                    </button>
+                  </div>
+                </div>
+              </div>
+            )}
     </div>
   );
 }

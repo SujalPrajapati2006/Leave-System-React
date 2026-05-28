@@ -1,0 +1,58 @@
+.admin-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 18px 32px;
+  background: white;
+  border-bottom: 1px solid #e5e7eb;
+  position: sticky;
+  top: 0;
+  z-index: 10;
+}
+
+.admin-header-title {
+  font-size: 22px;
+  font-weight: 700;
+  color: #1a1a1a;
+  font-family: 'DM Sans', sans-serif;
+}
+
+.admin-header-sub {
+  font-size: 13px;
+  color: #6b7280;
+  margin-top: 2px;
+  font-family: 'DM Sans', sans-serif;
+}
+
+.admin-header-actions {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.admin-header-btn {
+  width: 36px; height: 36px;
+  border-radius: 8px;
+  border: 1px solid #e5e7eb;
+  background: white;
+  cursor: pointer;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 15px;
+  position: relative;
+  transition: background 0.15s;
+  font-family: 'DM Sans', sans-serif;
+}
+.admin-header-btn:hover { background: #f9fafb; }
+
+.notif-count {
+  position: absolute;
+  top: -5px; right: -5px;
+  background: #ef4444;
+  color: white;
+  font-size: 9px;
+  font-weight: 700;
+  min-width: 16px; height: 16px;
+  border-radius: 999px;
+  display: flex; align-items: center; justify-content: center;
+  font-family: 'DM Sans', sans-serif;
+}
