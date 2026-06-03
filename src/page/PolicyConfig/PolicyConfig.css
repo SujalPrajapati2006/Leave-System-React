@@ -1,0 +1,509 @@
+/* ══════════════════════════════════
+   PolicyConfig.css — LeaveOS theme
+══════════════════════════════════ */
+
+.pc-root {
+  padding: 0;
+  font-family: 'Inter', system-ui, sans-serif;
+}
+
+/* ── Tabs ── */
+.pc-tabs {
+  display: flex;
+  gap: 4px;
+  margin-bottom: 28px;
+  background: var(--dash-surface2, #1e2433);
+  border-radius: 10px;
+  padding: 5px;
+  width: fit-content;
+}
+
+.pc-tab {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  padding: 8px 18px;
+  border-radius: 7px;
+  border: none;
+  background: transparent;
+  color: var(--dash-muted, #8892a4);
+  font-size: 13.5px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.18s;
+}
+
+.pc-tab:hover {
+  color: var(--dash-text, #e8ecf4);
+}
+
+.pc-tab.active {
+  background: var(--dash-accent, #3b5bdb);
+  color: #fff;
+  box-shadow: 0 2px 12px #3b5bdb44;
+}
+
+/* ── Section header ── */
+.pc-sec-head {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 22px;
+}
+
+.pc-sec-title {
+  font-size: 17px;
+  font-weight: 700;
+  color: var(--dash-text, #e8ecf4);
+  margin-bottom: 3px;
+}
+
+.pc-sec-sub {
+  font-size: 13px;
+  color: var(--dash-muted, #8892a4);
+}
+
+.pc-add-btn {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  padding: 9px 18px;
+  background: var(--dash-accent, #3b5bdb);
+  color: #fff;
+  border: none;
+  border-radius: 8px;
+  font-size: 13.5px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: opacity 0.15s, transform 0.15s;
+}
+
+.pc-add-btn:hover {
+  opacity: 0.88;
+  transform: translateY(-1px);
+}
+
+/* ── Policy Cards ── */
+.pc-policy-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(290px, 1fr));
+  gap: 16px;
+}
+
+.pc-policy-card {
+  background: var(--dash-surface, #161c2d);
+  border: 1px solid var(--dash-border, #242d42);
+  border-radius: 12px;
+  padding: 18px 20px;
+  transition: border-color 0.18s, box-shadow 0.18s;
+}
+
+.pc-policy-card:hover {
+  border-color: var(--dash-accent, #3b5bdb);
+  box-shadow: 0 0 0 3px #3b5bdb14;
+}
+
+.pc-pc-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 14px;
+}
+
+.pc-pc-name {
+  font-size: 15px;
+  font-weight: 700;
+  color: var(--dash-text, #e8ecf4);
+}
+
+.pc-pc-actions {
+  display: flex;
+  gap: 6px;
+}
+
+.pc-pc-stats {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 14px;
+}
+
+.pc-stat-chip {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2px;
+  padding: 10px 6px;
+  border-radius: 8px;
+  font-weight: 700;
+}
+
+.pc-stat-chip span {
+  font-size: 20px;
+}
+
+.pc-stat-chip small {
+  font-size: 10px;
+  font-weight: 500;
+  opacity: 0.75;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.pc-stat-chip.blue  { background: #3b5bdb18; color: #7c9cff; }
+.pc-stat-chip.amber { background: #f59e0b18; color: #fbbf24; }
+.pc-stat-chip.green { background: #10b98118; color: #34d399; }
+
+.pc-pc-meta {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 12px;
+  color: var(--dash-muted, #8892a4);
+}
+
+.pc-carry-badge {
+  padding: 3px 10px;
+  border-radius: 20px;
+  font-size: 11px;
+  font-weight: 600;
+}
+
+.pc-carry-badge.on  { background: #10b98118; color: #34d399; }
+.pc-carry-badge.off { background: #ef444418; color: #f87171; }
+
+/* ── Table ── */
+.pc-table-wrap {
+  background: var(--dash-surface, #161c2d);
+  border: 1px solid var(--dash-border, #242d42);
+  border-radius: 12px;
+  overflow: hidden;
+}
+
+.pc-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 13.5px;
+}
+
+.pc-table thead tr {
+  background: var(--dash-surface2, #1e2433);
+  border-bottom: 1px solid var(--dash-border, #242d42);
+}
+
+.pc-table th {
+  padding: 13px 18px;
+  text-align: left;
+  font-size: 11.5px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.07em;
+  color: var(--dash-muted, #8892a4);
+}
+
+.pc-table td {
+  padding: 13px 18px;
+  color: var(--dash-text, #e8ecf4);
+  border-bottom: 1px solid var(--dash-border, #242d42);
+}
+
+.pc-table tbody tr:last-child td {
+  border-bottom: none;
+}
+
+.pc-table tbody tr {
+  transition: background 0.12s;
+}
+
+.pc-table tbody tr:hover {
+  background: var(--dash-surface2, #1e2433);
+}
+
+.pc-dept-name {
+  font-weight: 600;
+}
+
+.pc-code-badge {
+  display: inline-block;
+  padding: 3px 10px;
+  background: var(--dash-surface2, #1e2433);
+  border: 1px solid var(--dash-border, #242d42);
+  border-radius: 6px;
+  font-size: 12px;
+  font-weight: 600;
+  font-family: 'JetBrains Mono', monospace;
+  color: var(--dash-accent, #7c9cff);
+}
+
+.pc-level-badge {
+  display: inline-block;
+  padding: 3px 10px;
+  border-radius: 20px;
+  font-size: 12px;
+  font-weight: 700;
+  border: 1px solid;
+}
+
+.pc-emp-count {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 36px;
+  padding: 3px 8px;
+  background: #3b5bdb18;
+  color: #7c9cff;
+  border-radius: 20px;
+  font-size: 12px;
+  font-weight: 700;
+}
+
+.pc-row-actions {
+  display: flex;
+  gap: 6px;
+  justify-content: flex-end;
+}
+
+/* ── Icon Buttons ── */
+.pc-icon-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 30px;
+  height: 30px;
+  border-radius: 7px;
+  border: 1px solid var(--dash-border, #242d42);
+  background: var(--dash-surface2, #1e2433);
+  color: var(--dash-muted, #8892a4);
+  cursor: pointer;
+  transition: all 0.15s;
+}
+
+.pc-icon-btn:hover {
+  color: var(--dash-text, #e8ecf4);
+  border-color: #8892a4;
+}
+
+.pc-icon-btn.danger:hover {
+  color: #f87171;
+  border-color: #f8717155;
+  background: #ef444412;
+}
+
+/* ── Modal Overlay ── */
+.pc-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.65);
+  backdrop-filter: blur(3px);
+  z-index: 1000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  animation: fadeIn 0.15s ease;
+}
+
+.pc-modal {
+  background: var(--dash-surface, #161c2d);
+  border: 1px solid var(--dash-border, #242d42);
+  border-radius: 14px;
+  width: 520px;
+  max-width: 96vw;
+  box-shadow: 0 24px 64px rgba(0, 0, 0, 0.6);
+  animation: slideUp 0.2s ease;
+}
+
+.pc-modal-sm {
+  width: 360px;
+  padding: 28px;
+  text-align: center;
+}
+
+.pc-modal-head {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 20px 24px 16px;
+  border-bottom: 1px solid var(--dash-border, #242d42);
+  font-size: 15px;
+  font-weight: 700;
+  color: var(--dash-text, #e8ecf4);
+}
+
+.pc-modal-body {
+  padding: 20px 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.pc-modal-foot {
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
+  padding: 16px 24px;
+  border-top: 1px solid var(--dash-border, #242d42);
+}
+
+/* ── Form Controls ── */
+.pc-label {
+  font-size: 12.5px;
+  font-weight: 600;
+  color: var(--dash-muted, #8892a4);
+  margin-bottom: 5px;
+  display: block;
+}
+
+.pc-input {
+  width: 100%;
+  padding: 9px 13px;
+  background: var(--dash-surface2, #1e2433);
+  border: 1px solid var(--dash-border, #242d42);
+  border-radius: 8px;
+  color: var(--dash-text, #e8ecf4);
+  font-size: 13.5px;
+  outline: none;
+  transition: border-color 0.15s;
+  box-sizing: border-box;
+}
+
+.pc-input:focus {
+  border-color: var(--dash-accent, #3b5bdb);
+  box-shadow: 0 0 0 3px #3b5bdb22;
+}
+
+.pc-input:disabled {
+  opacity: 0.45;
+  cursor: not-allowed;
+}
+
+select.pc-input {
+  cursor: pointer;
+}
+
+.pc-form-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  gap: 12px;
+}
+
+.pc-form-row:has(> :only-child) {
+  grid-template-columns: 1fr;
+}
+
+.pc-form-row > div {
+  display: flex;
+  flex-direction: column;
+}
+
+.pc-form-row-2 {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+}
+
+.pc-form-row-2 > div {
+  display: flex;
+  flex-direction: column;
+}
+
+.pc-checkbox-row {
+  display: flex;
+  align-items: center;
+  gap: 9px;
+  font-size: 13.5px;
+  color: var(--dash-text, #e8ecf4);
+  cursor: pointer;
+}
+
+.pc-checkbox-row input[type="checkbox"] {
+  width: 16px;
+  height: 16px;
+  accent-color: var(--dash-accent, #3b5bdb);
+  cursor: pointer;
+}
+
+/* ── Buttons ── */
+.pc-cancel-btn {
+  padding: 9px 18px;
+  background: var(--dash-surface2, #1e2433);
+  border: 1px solid var(--dash-border, #242d42);
+  color: var(--dash-text, #e8ecf4);
+  border-radius: 8px;
+  font-size: 13.5px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: opacity 0.15s;
+}
+
+.pc-cancel-btn:hover {
+  opacity: 0.8;
+}
+
+.pc-save-btn {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  padding: 9px 20px;
+  background: var(--dash-accent, #3b5bdb);
+  color: #fff;
+  border: none;
+  border-radius: 8px;
+  font-size: 13.5px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: opacity 0.15s;
+}
+
+.pc-save-btn:hover {
+  opacity: 0.88;
+}
+
+.pc-delete-btn {
+  padding: 9px 18px;
+  background: #dc2626;
+  color: #fff;
+  border: none;
+  border-radius: 8px;
+  font-size: 13.5px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: opacity 0.15s;
+}
+
+.pc-delete-btn:hover {
+  opacity: 0.88;
+}
+
+/* ── Delete Confirm ── */
+.pc-del-icon  { font-size: 36px; margin-bottom: 10px; }
+.pc-del-title { font-size: 17px; font-weight: 700; color: var(--dash-text, #e8ecf4); margin-bottom: 6px; }
+.pc-del-sub   { font-size: 13px; color: var(--dash-muted, #8892a4); margin-bottom: 20px; }
+
+/* ── Animations ── */
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+
+@keyframes slideUp {
+  from { transform: translateY(18px); opacity: 0; }
+  to   { transform: translateY(0);    opacity: 1; }
+}
+
+.fade-up {
+  animation: slideUp 0.25s ease;
+}
+
+/* ── Policy status badge (on cards) ── */
+.pc-status-badge {
+  display: inline-block;
+  padding: 3px 10px;
+  border-radius: 20px;
+  font-size: 11px;
+  font-weight: 600;
+}
+.pc-status-badge.active   { background: #10b98118; color: #34d399; }
+.pc-status-badge.inactive { background: #ef444418; color: #f87171; }
+
+/* ── Earned leave chip colour ── */
+.pc-stat-chip.purple { background: #8b5cf618; color: #a78bfa; }

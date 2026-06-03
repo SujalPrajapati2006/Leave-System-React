@@ -5,6 +5,7 @@ import AdminHeader from "../components/layout/AdminHeader";
 import AdminDashboard from "./AdminDashboard/AdminDashboard";
 import authApi, { authState } from "../api/authApi";
 import EmployeeManagement from "./EmployeeManagement/EmployeeManagement";
+import PolicyConfig from "./PolicyConfig/PolicyConfig";
 import "./AdminApp.css";
 
 // Reuse same LogoutIcon from Dashboard
@@ -26,6 +27,7 @@ export default function AdminApp() {
   const pages = {
     dashboard: <AdminDashboard />,
     "employee-management": <EmployeeManagement onAddEmployee={() => setActivePage("dashboard")} />,
+    "policy-config":       <PolicyConfig />,
   };
 
   const handleLogout = async () => {
