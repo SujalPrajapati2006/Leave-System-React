@@ -1,0 +1,375 @@
+/* ===== Main ===== */
+.em-main {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  padding: 28px 32px;
+  background: #f4f4f2;
+  min-height: 100vh;
+  font-family: 'Segoe UI', system-ui, sans-serif;
+  font-size: 14px;
+  color: #1a1a1a;
+  box-sizing: border-box;
+}
+
+/* ===== Header ===== */
+.em-header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  margin-bottom: 24px;
+}
+
+.em-page-title {
+  font-size: 22px;
+  font-weight: 700;
+  color: #111;
+  margin: 0 0 4px 0;
+}
+
+.em-page-sub {
+  font-size: 13px;
+  color: #888;
+  margin: 0;
+}
+
+.em-header-actions {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.em-icon-btn {
+  width: 36px;
+  height: 36px;
+  background: #ffffff;
+  border: 1px solid #e4e4e4;
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  color: #555;
+  transition: background 0.15s;
+}
+
+.em-icon-btn:hover {
+  background: #f0f0f0;
+}
+
+/* ===== Card ===== */
+.em-card {
+  background: #ffffff;
+  border-radius: 14px;
+  padding: 28px 30px 32px 30px;
+  border: 1px solid #e8e8e8;
+}
+
+/* ===== Admin Row ===== */
+.em-admin-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 28px;
+}
+
+.em-admin-info {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+
+.em-avatar {
+  width: 46px;
+  height: 46px;
+  background: #2b3d27;
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #ffffff;
+  font-size: 18px;
+  font-weight: 700;
+}
+
+.em-admin-name {
+  font-size: 15px;
+  font-weight: 600;
+  color: #111;
+}
+
+.em-admin-id {
+  font-size: 12.5px;
+  color: #888;
+  margin: 2px 0 5px;
+}
+
+.em-badge-admin {
+  background: #e8f5e9;
+  color: #2e7d32;
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.8px;
+  padding: 2px 8px;
+  border-radius: 4px;
+}
+
+.em-fy-badge {
+  background: #f7f7f5;
+  border: 1px solid #e4e4e4;
+  border-radius: 8px;
+  padding: 6px 14px;
+  font-size: 13px;
+  color: #444;
+  font-weight: 500;
+}
+
+/* ===== Step Title ===== */
+.em-step-title {
+  font-size: 14.5px;
+  font-weight: 700;
+  color: #111;
+  margin: 0 0 14px 0;
+}
+
+/* ===== Form Grids ===== */
+.em-form-grid {
+  display: grid;
+  gap: 16px;
+  margin-bottom: 26px;
+}
+
+.em-grid-5 {
+  grid-template-columns: repeat(5, 1fr);
+}
+
+.em-grid-4 {
+  grid-template-columns: repeat(4, 1fr);
+}
+
+.em-grid-3-access {
+  grid-template-columns: 1fr 1fr auto;
+  align-items: end;
+}
+
+/* ===== Fields ===== */
+.em-field {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+
+.em-label {
+  font-size: 12px;
+  font-weight: 500;
+  color: #555;
+}
+
+/* ===== Inputs ===== */
+.em-input-wrap {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.em-input-icon {
+  position: absolute;
+  left: 10px;
+  color: #aaa;
+  pointer-events: none;
+}
+
+.em-input {
+  width: 100%;
+  height: 38px;
+  border: 1px solid #e0e0e0;
+  border-radius: 8px;
+  padding: 0 12px;
+  font-size: 13px;
+  color: #222;
+  background: #fafafa;
+  outline: none;
+  transition: border-color 0.15s, box-shadow 0.15s;
+  box-sizing: border-box;
+}
+
+.em-input-wrap .em-input-icon ~ .em-input {
+  padding-left: 30px;
+}
+
+.em-input:focus {
+  border-color: #4a7c40;
+  box-shadow: 0 0 0 2px rgba(74, 124, 64, 0.12);
+  background: #fff;
+}
+
+.em-input::placeholder {
+  color: #bbb;
+}
+
+/* Number spinner */
+.em-spinner-wrap {
+  position: relative;
+}
+
+.em-spinner-wrap .em-input {
+  padding-right: 28px;
+  appearance: textfield;
+  -moz-appearance: textfield;
+}
+
+.em-spinner-wrap .em-input::-webkit-inner-spin-button,
+.em-spinner-wrap .em-input::-webkit-outer-spin-button {
+  -webkit-appearance: none;
+}
+
+.em-spinners {
+  position: absolute;
+  right: 4px;
+  top: 50%;
+  transform: translateY(-50%);
+  display: flex;
+  flex-direction: column;
+  gap: 1px;
+}
+
+.em-spin-btn {
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-size: 8px;
+  color: #888;
+  padding: 1px 3px;
+  line-height: 1;
+  transition: color 0.1s;
+}
+
+.em-spin-btn:hover {
+  color: #333;
+}
+
+/* ===== Select ===== */
+.em-select-wrap {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.em-select-icon {
+  position: absolute;
+  left: 10px;
+  color: #aaa;
+  pointer-events: none;
+  z-index: 1;
+}
+
+.em-select {
+  width: 100%;
+  height: 38px;
+  border: 1px solid #e0e0e0;
+  border-radius: 8px;
+  padding: 0 32px 0 12px;
+  font-size: 13px;
+  color: #222;
+  background: #fafafa;
+  outline: none;
+  appearance: none;
+  -webkit-appearance: none;
+  cursor: pointer;
+  transition: border-color 0.15s;
+}
+
+.em-select-wrap .em-select-icon ~ .em-select {
+  padding-left: 30px;
+}
+
+.em-select:focus {
+  border-color: #4a7c40;
+  box-shadow: 0 0 0 2px rgba(74, 124, 64, 0.12);
+  background: #fff;
+}
+
+.em-select-wrap::after {
+  content: "▾";
+  position: absolute;
+  right: 10px;
+  font-size: 11px;
+  color: #888;
+  pointer-events: none;
+}
+
+/* ===== Checkbox ===== */
+.em-checkbox-field {
+  justify-content: flex-end;
+  padding-bottom: 6px;
+}
+
+.em-checkbox-label {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 13px;
+  color: #444;
+  cursor: pointer;
+  white-space: nowrap;
+}
+
+.em-checkbox {
+  width: 15px;
+  height: 15px;
+  accent-color: #4a7c40;
+  cursor: pointer;
+}
+
+/* ===== Submit ===== */
+.em-submit-row {
+  display: flex;
+  justify-content: center;
+  margin-top: 8px;
+}
+
+.em-submit-btn {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  background: #2b3d27;
+  color: #ffffff;
+  border: none;
+  border-radius: 10px;
+  padding: 12px 32px;
+  font-size: 14.5px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.18s, transform 0.1s;
+  letter-spacing: 0.2px;
+}
+
+.em-submit-btn:hover {
+  background: #3a5234;
+  transform: translateY(-1px);
+}
+
+.em-submit-btn:active {
+  transform: translateY(0);
+}
+
+/* ===== Responsive ===== */
+@media (max-width: 1100px) {
+  .em-grid-5 {
+    grid-template-columns: repeat(3, 1fr);
+  }
+  .em-grid-4 {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 768px) {
+  .em-main {
+    padding: 20px 16px;
+  }
+  .em-grid-5,
+  .em-grid-4,
+  .em-grid-3-access {
+    grid-template-columns: 1fr;
+  }
+}
