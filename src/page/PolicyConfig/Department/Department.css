@@ -1,0 +1,506 @@
+/* ══════════════════════════════════════════
+   Department.css
+   Light-theme styles for the Departments tab.
+   Matches the screenshot design exactly.
+══════════════════════════════════════════ */
+
+/* ── Root ── */
+.dep-section {
+  padding: 0;
+  font-family: 'Inter', system-ui, sans-serif;
+}
+
+.dep-field-error {
+  color: #ef4444;
+  font-size: 12px;
+  margin-top: 4px;
+  font-weight: 500;
+}
+
+/* ══════════════════════════════════════════
+   SECTION HEADER
+══════════════════════════════════════════ */
+.dep-sec-head {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 22px;
+  gap: 16px;
+}
+
+.dep-sec-title {
+  font-size: 17px;
+  font-weight: 700;
+  color: #1a2035;
+  margin-bottom: 3px;
+}
+
+.dep-sec-sub {
+  font-size: 13px;
+  color: #6b7280;
+}
+
+/* ── "New Department" button ── */
+.dep-add-btn {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  padding: 9px 18px;
+  background: #3b5bdb;
+  color: #fff;
+  border: none;
+  border-radius: 8px;
+  font-size: 13.5px;
+  font-weight: 600;
+  cursor: pointer;
+  white-space: nowrap;
+  transition: opacity 0.15s, transform 0.15s;
+}
+
+.dep-add-btn:hover:not(:disabled) {
+  opacity: 0.88;
+  transform: translateY(-1px);
+}
+
+.dep-add-btn:disabled {
+  opacity: 0.45;
+  cursor: not-allowed;
+  transform: none;
+}
+
+/* ══════════════════════════════════════════
+   LOADING / ERROR STATES
+══════════════════════════════════════════ */
+.dep-loading {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 60px 20px;
+  color: #6b7280;
+  gap: 10px;
+  font-size: 14px;
+}
+
+.dep-error-banner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  background: #fef2f2;
+  border: 1px solid #fca5a5;
+  border-radius: 10px;
+  padding: 14px 18px;
+  color: #dc2626;
+  font-size: 13.5px;
+  margin-bottom: 18px;
+}
+
+.dep-retry-btn {
+  padding: 5px 14px;
+  background: #fee2e2;
+  border: 1px solid #fca5a5;
+  color: #dc2626;
+  border-radius: 6px;
+  font-size: 12px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.15s;
+  white-space: nowrap;
+}
+
+.dep-retry-btn:hover {
+  background: #fecaca;
+}
+
+/* ══════════════════════════════════════════
+   TABLE
+══════════════════════════════════════════ */
+.dep-table-wrap {
+  background: #ffffff;
+  border: 1px solid #e5e7eb;
+  border-radius: 12px;
+  overflow: hidden;
+}
+
+.dep-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 13.5px;
+}
+
+.dep-table thead tr {
+  background: #f9fafb;
+  border-bottom: 1px solid #e5e7eb;
+}
+
+.dep-table th {
+  padding: 13px 18px;
+  text-align: left;
+  font-size: 11.5px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.07em;
+  color: #6b7280;
+  white-space: nowrap;
+}
+
+.dep-table td {
+  padding: 13px 18px;
+  color: #1a2035;
+  border-bottom: 1px solid #f3f4f6;
+  vertical-align: middle;
+}
+
+.dep-table tbody tr:last-child td {
+  border-bottom: none;
+}
+
+.dep-table tbody tr {
+  transition: background 0.12s;
+}
+
+.dep-table tbody tr:hover {
+  background: #f9fafb;
+}
+
+/* Cell helpers */
+.dep-dept-name {
+  font-weight: 600;
+  color: #1a2035;
+}
+
+.dep-code-badge {
+  display: inline-block;
+  padding: 3px 10px;
+  background: #f0f4ff;
+  border: 1px solid #c7d2fe;
+  border-radius: 6px;
+  font-size: 12px;
+  font-weight: 600;
+  font-family: 'JetBrains Mono', 'Fira Code', monospace;
+  color: #3b5bdb;
+  letter-spacing: 0.03em;
+}
+
+.dep-row-actions {
+  display: flex;
+  gap: 6px;
+  justify-content: flex-end;
+}
+
+/* ══════════════════════════════════════════
+   STATUS BADGES
+══════════════════════════════════════════ */
+.dep-status-badge {
+  display: inline-block;
+  padding: 3px 10px;
+  border-radius: 20px;
+  font-size: 11px;
+  font-weight: 600;
+  white-space: nowrap;
+}
+
+.dep-status-badge.active   { background: #dcfce7; color: #16a34a; }
+.dep-status-badge.inactive { background: #fee2e2; color: #dc2626; }
+
+/* ══════════════════════════════════════════
+   ICON BUTTONS (edit / trash)
+══════════════════════════════════════════ */
+.dep-icon-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 30px;
+  height: 30px;
+  border-radius: 7px;
+  border: 1px solid #e5e7eb;
+  background: #f9fafb;
+  color: #6b7280;
+  cursor: pointer;
+  transition: color 0.15s, border-color 0.15s, background 0.15s;
+  padding: 0;
+  flex-shrink: 0;
+}
+
+.dep-icon-btn:hover:not(:disabled) {
+  color: #1a2035;
+  border-color: #9ca3af;
+  background: #f3f4f6;
+}
+
+.dep-icon-btn:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+}
+
+.dep-icon-btn.danger:hover:not(:disabled) {
+  color: #dc2626;
+  border-color: #fca5a5;
+  background: #fef2f2;
+}
+
+/* ══════════════════════════════════════════
+   MODAL OVERLAY
+══════════════════════════════════════════ */
+.dep-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.45);
+  backdrop-filter: blur(3px);
+  -webkit-backdrop-filter: blur(3px);
+  z-index: 1000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 16px;
+  animation: depFadeIn 0.15s ease;
+}
+
+.dep-modal {
+  background: #ffffff;
+  border: 1px solid #e5e7eb;
+  border-radius: 14px;
+  width: 480px;
+  max-width: 100%;
+  max-height: calc(100vh - 48px);
+  overflow-y: auto;
+  box-shadow: 0 24px 64px rgba(0, 0, 0, 0.18);
+  animation: depSlideUp 0.2s ease;
+}
+
+/* Smaller confirmation modal */
+.dep-modal-sm {
+  width: 360px;
+  padding: 28px 24px;
+  text-align: center;
+}
+
+.dep-modal-head {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 20px 24px 16px;
+  border-bottom: 1px solid #e5e7eb;
+  font-size: 15px;
+  font-weight: 700;
+  color: #1a2035;
+  gap: 12px;
+}
+
+.dep-modal-body {
+  padding: 20px 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.dep-modal-foot {
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
+  padding: 16px 24px;
+  border-top: 1px solid #e5e7eb;
+}
+
+/* ══════════════════════════════════════════
+   FORM CONTROLS (inside modal)
+══════════════════════════════════════════ */
+.dep-label {
+  display: block;
+  font-size: 12.5px;
+  font-weight: 600;
+  color: #374151;
+  margin-bottom: 5px;
+}
+
+.dep-required {
+  color: #ef4444;
+  margin-left: 2px;
+}
+
+.dep-input {
+  width: 100%;
+  padding: 9px 13px;
+  background: #f9fafb;
+  border: 1px solid #e5e7eb;
+  border-radius: 8px;
+  color: #1a2035;
+  font-size: 13.5px;
+  outline: none;
+  transition: border-color 0.15s, box-shadow 0.15s;
+  box-sizing: border-box;
+  font-family: inherit;
+}
+
+.dep-input::placeholder {
+  color: #9ca3af;
+}
+
+.dep-input:focus {
+  border-color: #3b5bdb;
+  box-shadow: 0 0 0 3px #3b5bdb22;
+  background: #fff;
+}
+
+.dep-input:disabled {
+  opacity: 0.45;
+  cursor: not-allowed;
+}
+
+select.dep-input {
+  cursor: pointer;
+  appearance: auto;
+}
+
+/* Validation error state */
+.dep-input.error {
+  border-color: #ef4444;
+  box-shadow: 0 0 0 3px #ef444422;
+}
+
+/* ══════════════════════════════════════════
+   MODAL BUTTONS
+══════════════════════════════════════════ */
+.dep-cancel-btn {
+  padding: 9px 18px;
+  background: #f9fafb;
+  border: 1px solid #e5e7eb;
+  color: #374151;
+  border-radius: 8px;
+  font-size: 13.5px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.15s;
+  font-family: inherit;
+}
+
+.dep-cancel-btn:hover:not(:disabled) {
+  background: #f3f4f6;
+}
+
+.dep-cancel-btn:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+}
+
+.dep-save-btn {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  padding: 9px 20px;
+  background: #3b5bdb;
+  color: #fff;
+  border: none;
+  border-radius: 8px;
+  font-size: 13.5px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: opacity 0.15s;
+  font-family: inherit;
+  white-space: nowrap;
+}
+
+.dep-save-btn:hover:not(:disabled) {
+  opacity: 0.88;
+}
+
+.dep-save-btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.dep-delete-btn {
+  padding: 9px 18px;
+  background: #dc2626;
+  color: #fff;
+  border: none;
+  border-radius: 8px;
+  font-size: 13.5px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: opacity 0.15s;
+  font-family: inherit;
+}
+
+.dep-delete-btn:hover:not(:disabled) {
+  opacity: 0.88;
+}
+
+.dep-delete-btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+/* ══════════════════════════════════════════
+   DELETE CONFIRM
+══════════════════════════════════════════ */
+.dep-del-icon  { font-size: 36px; margin-bottom: 10px; display: block; }
+.dep-del-title { font-size: 17px; font-weight: 700; color: #1a2035; margin-bottom: 6px; }
+.dep-del-sub   { font-size: 13px; color: #6b7280; margin-bottom: 20px; line-height: 1.5; }
+.dep-del-name  { color: #1a2035; font-weight: 700; }
+
+/* ══════════════════════════════════════════
+   TOAST NOTIFICATIONS
+══════════════════════════════════════════ */
+.dep-toast-stack {
+  position: fixed;
+  bottom: 24px;
+  right: 24px;
+  z-index: 9999;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  pointer-events: none;
+}
+
+.dep-toast {
+  padding: 11px 18px;
+  border-radius: 10px;
+  font-size: 13.5px;
+  font-weight: 600;
+  color: #fff;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
+  animation: depSlideUp 0.22s ease;
+  max-width: 320px;
+  line-height: 1.4;
+}
+
+.dep-toast.success { background: #059669; }
+.dep-toast.error   { background: #dc2626; }
+.dep-toast.info    { background: #3b5bdb; }
+
+/* ══════════════════════════════════════════
+   ANIMATIONS
+══════════════════════════════════════════ */
+@keyframes depFadeIn {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+
+@keyframes depSlideUp {
+  from { transform: translateY(18px); opacity: 0; }
+  to   { transform: translateY(0);    opacity: 1; }
+}
+
+.fade-up {
+  animation: depSlideUp 0.25s ease;
+}
+
+/* ══════════════════════════════════════════
+   RESPONSIVE TWEAKS
+══════════════════════════════════════════ */
+@media (max-width: 600px) {
+  .dep-modal {
+    width: 100%;
+  }
+
+  .dep-toast-stack {
+    bottom: 16px;
+    right: 12px;
+    left: 12px;
+  }
+
+  .dep-toast {
+    max-width: 100%;
+  }
+}
