@@ -1,11 +1,8 @@
 /* ══════════════════════════════════════════
-   LeavePolicy.css
-   Light-theme styles for the Leave Policy tab.
-   Matches PolicyConfig.css variable convention
-   and screenshot design exactly.
+   LeavePolicy.css  (lp-*)
+   Includes dynamic leave allocation table styles
 ══════════════════════════════════════════ */
 
-/* ── Root ── */
 .lp-section {
   padding: 0;
   font-family: 'Inter', system-ui, sans-serif;
@@ -18,9 +15,7 @@
   font-weight: 500;
 }
 
-/* ══════════════════════════════════════════
-   SECTION HEADER
-══════════════════════════════════════════ */
+/* ══ Section Header ══════════════════════ */
 .lp-sec-head {
   display: flex;
   justify-content: space-between;
@@ -41,7 +36,6 @@
   color: #6b7280;
 }
 
-/* ── "New Policy" add button ── */
 .lp-add-btn {
   display: flex;
   align-items: center;
@@ -56,6 +50,7 @@
   cursor: pointer;
   white-space: nowrap;
   transition: opacity 0.15s, transform 0.15s;
+  font-family: inherit;
 }
 
 .lp-add-btn:hover:not(:disabled) {
@@ -69,9 +64,7 @@
   transform: none;
 }
 
-/* ══════════════════════════════════════════
-   LOADING / ERROR STATES
-══════════════════════════════════════════ */
+/* ══ Loading / Error ═════════════════════ */
 .lp-loading {
   display: flex;
   align-items: center;
@@ -115,13 +108,9 @@
   white-space: nowrap;
 }
 
-.lp-retry-btn:hover {
-  background: #fecaca;
-}
+.lp-retry-btn:hover { background: #fecaca; }
 
-/* ══════════════════════════════════════════
-   POLICY CARDS GRID
-══════════════════════════════════════════ */
+/* ══ Policy Cards Grid ═══════════════════ */
 .lp-policy-grid {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(290px, 1fr));
@@ -141,7 +130,6 @@
   box-shadow: 0 0 0 3px #3b5bdb14;
 }
 
-/* Card top row: name + actions */
 .lp-pc-top {
   display: flex;
   justify-content: space-between;
@@ -166,21 +154,22 @@
   flex-shrink: 0;
 }
 
-/* Stat chips row */
+/* Dynamic chip row — wraps for many types */
 .lp-pc-stats {
   display: flex;
-  gap: 10px;
+  flex-wrap: wrap;
+  gap: 8px;
 }
 
 .lp-stat-chip {
-  flex: 1;
   display: flex;
   flex-direction: column;
   align-items: center;
   gap: 2px;
-  padding: 10px 6px;
+  padding: 9px 10px;
   border-radius: 8px;
   font-weight: 700;
+  min-width: 52px;
 }
 
 .lp-stat-chip span {
@@ -194,17 +183,17 @@
   opacity: 0.75;
   text-transform: uppercase;
   letter-spacing: 0.05em;
+  text-align: center;
 }
 
-/* Matching light-themed chip colors from screenshot */
 .lp-stat-chip.blue   { background: #eff6ff; color: #3b82f6; }
 .lp-stat-chip.amber  { background: #fffbeb; color: #d97706; }
 .lp-stat-chip.green  { background: #f0fdf4; color: #16a34a; }
 .lp-stat-chip.purple { background: #f5f3ff; color: #7c3aed; }
+.lp-stat-chip.coral  { background: #fff1f0; color: #e84545; }
+.lp-stat-chip.teal   { background: #f0fdfa; color: #0d9488; }
 
-/* ══════════════════════════════════════════
-   STATUS BADGES
-══════════════════════════════════════════ */
+/* ══ Status Badges ═══════════════════════ */
 .lp-status-badge {
   display: inline-block;
   padding: 3px 10px;
@@ -217,9 +206,7 @@
 .lp-status-badge.active   { background: #dcfce7; color: #16a34a; }
 .lp-status-badge.inactive { background: #fee2e2; color: #dc2626; }
 
-/* ══════════════════════════════════════════
-   ICON BUTTONS (edit / trash)
-══════════════════════════════════════════ */
+/* ══ Icon Buttons ════════════════════════ */
 .lp-icon-btn {
   display: flex;
   align-items: center;
@@ -253,9 +240,7 @@
   background: #fef2f2;
 }
 
-/* ══════════════════════════════════════════
-   MODAL OVERLAY
-══════════════════════════════════════════ */
+/* ══ Modal Overlay ═══════════════════════ */
 .lp-overlay {
   position: fixed;
   inset: 0;
@@ -282,7 +267,11 @@
   animation: lpSlideUp 0.2s ease;
 }
 
-/* Smaller confirmation modal */
+/* Wider modal for dynamic allocation table */
+.lp-modal-wide {
+  width: 560px;
+}
+
 .lp-modal-sm {
   width: 360px;
   padding: 28px 24px;
@@ -305,7 +294,7 @@
   padding: 20px 24px;
   display: flex;
   flex-direction: column;
-  gap: 14px;
+  gap: 20px;
 }
 
 .lp-modal-foot {
@@ -316,9 +305,7 @@
   border-top: 1px solid #e5e7eb;
 }
 
-/* ══════════════════════════════════════════
-   FORM CONTROLS (inside modal)
-══════════════════════════════════════════ */
+/* ══ Form Controls ═══════════════════════ */
 .lp-label {
   display: block;
   font-size: 12.5px;
@@ -346,9 +333,7 @@
   font-family: inherit;
 }
 
-.lp-input::placeholder {
-  color: #9ca3af;
-}
+.lp-input::placeholder { color: #9ca3af; }
 
 .lp-input:focus {
   border-color: #3b5bdb;
@@ -366,7 +351,6 @@ select.lp-input {
   appearance: auto;
 }
 
-/* Input validation error state */
 .lp-input.error {
   border-color: #ef4444;
   box-shadow: 0 0 0 3px #ef444422;
@@ -379,10 +363,7 @@ select.lp-input {
   gap: 12px;
 }
 
-.lp-form-row > div {
-  display: flex;
-  flex-direction: column;
-}
+.lp-form-row > div { display: flex; flex-direction: column; }
 
 .lp-form-row-2 {
   display: grid;
@@ -390,14 +371,109 @@ select.lp-input {
   gap: 12px;
 }
 
-.lp-form-row-2 > div {
-  display: flex;
-  flex-direction: column;
+.lp-form-row-2 > div { display: flex; flex-direction: column; }
+
+/* ══ Dynamic Allocation Section ══════════ */
+.lp-alloc-section {
+  border: 1px solid #e5e7eb;
+  border-radius: 10px;
+  overflow: hidden;
 }
 
-/* ══════════════════════════════════════════
-   MODAL BUTTONS
-══════════════════════════════════════════ */
+.lp-alloc-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 12px 16px;
+  background: #f9fafb;
+  border-bottom: 1px solid #e5e7eb;
+}
+
+.lp-alloc-title {
+  font-size: 13px;
+  font-weight: 700;
+  color: #1a2035;
+}
+
+.lp-alloc-sub {
+  font-size: 12px;
+  color: #6b7280;
+}
+
+.lp-alloc-table-wrap {
+  overflow-x: auto;
+}
+
+.lp-alloc-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 13.5px;
+}
+
+.lp-alloc-table thead tr {
+  border-bottom: 1px solid #e5e7eb;
+}
+
+.lp-alloc-table th {
+  padding: 10px 14px;
+  text-align: left;
+  font-size: 11px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.07em;
+  color: #6b7280;
+}
+
+.lp-alloc-table td {
+  padding: 8px 14px;
+  border-bottom: 1px solid #f3f4f6;
+  vertical-align: top;
+}
+
+.lp-alloc-table tbody tr:last-child td {
+  border-bottom: none;
+}
+
+/* Allocation inputs — tighter */
+.lp-alloc-select {
+  padding: 7px 10px;
+  font-size: 13px;
+}
+
+.lp-alloc-days {
+  padding: 7px 10px;
+  font-size: 13px;
+  text-align: right;
+}
+
+/* Add row button */
+.lp-add-row-btn {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  width: 100%;
+  padding: 10px 16px;
+  background: transparent;
+  border: none;
+  border-top: 1px dashed #e5e7eb;
+  color: #3b5bdb;
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.15s;
+  font-family: inherit;
+}
+
+.lp-add-row-btn:hover:not(:disabled) {
+  background: #f0f4ff;
+}
+
+.lp-add-row-btn:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+}
+
+/* ══ Modal Buttons ═══════════════════════ */
 .lp-cancel-btn {
   padding: 9px 18px;
   background: #f9fafb;
@@ -411,14 +487,8 @@ select.lp-input {
   font-family: inherit;
 }
 
-.lp-cancel-btn:hover:not(:disabled) {
-  background: #f3f4f6;
-}
-
-.lp-cancel-btn:disabled {
-  opacity: 0.4;
-  cursor: not-allowed;
-}
+.lp-cancel-btn:hover:not(:disabled) { background: #f3f4f6; }
+.lp-cancel-btn:disabled { opacity: 0.4; cursor: not-allowed; }
 
 .lp-save-btn {
   display: flex;
@@ -437,14 +507,8 @@ select.lp-input {
   white-space: nowrap;
 }
 
-.lp-save-btn:hover:not(:disabled) {
-  opacity: 0.88;
-}
-
-.lp-save-btn:disabled {
-  opacity: 0.5;
-  cursor: not-allowed;
-}
+.lp-save-btn:hover:not(:disabled) { opacity: 0.88; }
+.lp-save-btn:disabled { opacity: 0.5; cursor: not-allowed; }
 
 .lp-delete-btn {
   padding: 9px 18px;
@@ -459,26 +523,16 @@ select.lp-input {
   font-family: inherit;
 }
 
-.lp-delete-btn:hover:not(:disabled) {
-  opacity: 0.88;
-}
+.lp-delete-btn:hover:not(:disabled) { opacity: 0.88; }
+.lp-delete-btn:disabled { opacity: 0.5; cursor: not-allowed; }
 
-.lp-delete-btn:disabled {
-  opacity: 0.5;
-  cursor: not-allowed;
-}
-
-/* ══════════════════════════════════════════
-   DELETE CONFIRM
-══════════════════════════════════════════ */
+/* ══ Delete Confirm ══════════════════════ */
 .lp-del-icon  { font-size: 36px; margin-bottom: 10px; display: block; }
 .lp-del-title { font-size: 17px; font-weight: 700; color: #1a2035; margin-bottom: 6px; }
 .lp-del-sub   { font-size: 13px; color: #6b7280; margin-bottom: 20px; line-height: 1.5; }
 .lp-del-name  { color: #1a2035; font-weight: 700; }
 
-/* ══════════════════════════════════════════
-   TOAST NOTIFICATIONS
-══════════════════════════════════════════ */
+/* ══ Toasts ══════════════════════════════ */
 .lp-toast-stack {
   position: fixed;
   bottom: 24px;
@@ -506,9 +560,7 @@ select.lp-input {
 .lp-toast.error   { background: #dc2626; }
 .lp-toast.info    { background: #3b5bdb; }
 
-/* ══════════════════════════════════════════
-   ANIMATIONS
-══════════════════════════════════════════ */
+/* ══ Animations ══════════════════════════ */
 @keyframes lpFadeIn {
   from { opacity: 0; }
   to   { opacity: 1; }
@@ -519,25 +571,14 @@ select.lp-input {
   to   { transform: translateY(0);    opacity: 1; }
 }
 
-.fade-up {
-  animation: lpSlideUp 0.25s ease;
-}
+.fade-up { animation: lpSlideUp 0.25s ease; }
 
-/* ══════════════════════════════════════════
-   RESPONSIVE TWEAKS
-══════════════════════════════════════════ */
+/* ══ Responsive ══════════════════════════ */
 @media (max-width: 600px) {
-  .lp-form-row {
-    grid-template-columns: 1fr 1fr;
-  }
-
-  .lp-policy-grid {
-    grid-template-columns: 1fr;
-  }
-
-  .lp-modal {
-    width: 100%;
-  }
+  .lp-form-row   { grid-template-columns: 1fr 1fr; }
+  .lp-form-row-2 { grid-template-columns: 1fr; }
+  .lp-policy-grid { grid-template-columns: 1fr; }
+  .lp-modal, .lp-modal-wide { width: 100%; }
 
   .lp-toast-stack {
     bottom: 16px;
@@ -545,7 +586,5 @@ select.lp-input {
     left: 12px;
   }
 
-  .lp-toast {
-    max-width: 100%;
-  }
+  .lp-toast { max-width: 100%; }
 }

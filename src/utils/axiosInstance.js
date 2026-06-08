@@ -21,10 +21,18 @@ const processQueue = (error, token = null) => {
 
 api.interceptors.request.use(
   (config) => {
+
     const token = localStorage.getItem("accessToken");
-    if (token) {
+
+    const isPublicApi =
+      config.url?.includes("/auth/login") ||
+      config.url?.includes("/auth/register") ||
+      config.url?.includes("/auth/refresh");
+
+    if (token && !isPublicApi) {
       config.headers.Authorization = `Bearer ${token}`;
     }
+
     return config;
   },
   (error) => Promise.reject(error)
@@ -59,9 +67,6 @@ api.interceptors.response.use(
     isRefreshing = true;
 
     try {
-      // Use VITE_BACKEND_URL (http://localhost:8080) + full path
-      // because this is a raw axios call, not going through the `api` instance
-      // (avoids attaching the expired token via the request interceptor)
       const { data } = await axios.post(
         `${import.meta.env.VITE_BACKEND_URL}/api/v1/auth/refresh`,
         {},
