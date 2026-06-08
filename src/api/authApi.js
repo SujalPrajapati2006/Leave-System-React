@@ -1,7 +1,7 @@
 import axios from "axios";
 import API_BASE_URL from "./apiConfig";
 
-export const authState = {
+export const authState  = {
   isLoggingOut: false,
 };
 
