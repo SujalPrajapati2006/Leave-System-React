@@ -1,109 +1,11 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import "./EmployeeManagement.css";
+import { fetchAllEmploymentTypes } from "../../api/EmploymentType";
+import { fetchAllDesignations } from "../../api/Designation";
+import { fetchAllDepartments } from "../../api/Department";
+import { fetchPolicyById } from "../../api/LeavePolicy";
+import { createEmployee } from "../../api/Employee";
 
-// ─── Designation → Org + Leave mapping ───────────────────────────────────────
-const DESIGNATION_MAP = {
-  "Software Engineer": {
-    department: "Engineering",
-    leavePolicy: "Corporate 2025",
-    leaves: [
-      { type: "Annual Leave", days: 18 },
-      { type: "Sick Leave", days: 12 },
-      { type: "Casual Leave", days: 6 },
-      { type: "Comp Off", days: 2 },
-    ],
-  },
-  "Senior Software Engineer": {
-    department: "Engineering",
-    leavePolicy: "Corporate 2025",
-    leaves: [
-      { type: "Annual Leave", days: 20 },
-      { type: "Sick Leave", days: 12 },
-      { type: "Casual Leave", days: 8 },
-      { type: "Comp Off", days: 4 },
-    ],
-  },
-  "QA Engineer": {
-    department: "Quality Assurance",
-    leavePolicy: "Corporate 2025",
-    leaves: [
-      { type: "Annual Leave", days: 18 },
-      { type: "Sick Leave", days: 12 },
-      { type: "Casual Leave", days: 6 },
-      { type: "Comp Off", days: 2 },
-    ],
-  },
-  "QA Lead": {
-    department: "Quality Assurance",
-    leavePolicy: "Corporate 2025",
-    leaves: [
-      { type: "Annual Leave", days: 20 },
-      { type: "Sick Leave", days: 14 },
-      { type: "Casual Leave", days: 8 },
-      { type: "Comp Off", days: 4 },
-    ],
-  },
-  "HR Executive": {
-    department: "Human Resources",
-    leavePolicy: "HR Policy 2025",
-    leaves: [
-      { type: "Annual Leave", days: 21 },
-      { type: "Sick Leave", days: 14 },
-      { type: "Casual Leave", days: 7 },
-      { type: "Comp Off", days: 3 },
-    ],
-  },
-  "Finance Executive": {
-    department: "Finance",
-    leavePolicy: "Corporate 2025",
-    leaves: [
-      { type: "Annual Leave", days: 18 },
-      { type: "Sick Leave", days: 12 },
-      { type: "Casual Leave", days: 6 },
-      { type: "Comp Off", days: 2 },
-    ],
-  },
-};
-
-// ─── SVG icons keyed by leave type (fallback for unknown types) ───────────────
-const LEAVE_ICONS = {
-  "Annual Leave": (
-    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-      <rect x="3" y="4" width="18" height="18" rx="2" />
-      <line x1="16" y1="2" x2="16" y2="6" />
-      <line x1="8" y1="2" x2="8" y2="6" />
-      <line x1="3" y1="10" x2="21" y2="10" />
-    </svg>
-  ),
-  "Sick Leave": (
-    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-      <path d="M22 12h-4l-3 9L9 3l-3 9H2" />
-    </svg>
-  ),
-  "Casual Leave": (
-    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-      <circle cx="12" cy="12" r="10" />
-      <line x1="12" y1="8" x2="12" y2="12" />
-      <line x1="12" y1="16" x2="12.01" y2="16" />
-    </svg>
-  ),
-  "Comp Off": (
-    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-      <polyline points="23 6 13.5 15.5 8.5 10.5 1 18" />
-      <polyline points="17 6 23 6 23 12" />
-    </svg>
-  ),
-  // Generic fallback icon for any future leave types
-  _default: (
-    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-      <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" />
-    </svg>
-  ),
-};
-
-const getLeaveIcon = (type) => LEAVE_ICONS[type] ?? LEAVE_ICONS["_default"];
-
-// ─── Inline SVG helpers ───────────────────────────────────────────────────────
 const IconUser = () => (
   <svg className="em-input-icon" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
     <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2" />
@@ -263,12 +165,35 @@ export default function EmployeeManagement() {
     designation: "",
   });
 
+  const [employmentTypes, setEmploymentTypes] = useState([]);
   const [loadingDesignation, setLoadingDesignation] = useState(false);
   const [submitting, setSubmitting] = useState(false);
-  const [resolved, setResolved] = useState(null); // { department, leavePolicy, leaves }
-  const [toast, setToast] = useState(null);        // { message, type }
-  const [successModal, setSuccessModal] = useState(null); // { employeeId }
+  const [resolved, setResolved] = useState(null);
+  const [toast, setToast] = useState(null);
+  const [successModal, setSuccessModal] = useState(null);
   const [errors, setErrors] = useState({});
+  const [profilePic, setProfilePic] = useState(null);
+  const [profilePreview, setProfilePreview] = useState(null);
+  const [designations, setDesignations] = useState([]);
+  const [activeTab, setActiveTab] = useState("add");
+  const [selectedEmployee, setSelectedEmployee] = useState(null);
+
+  useEffect(() => {
+    fetchAllEmploymentTypes()
+      .then(({ employmentTypes }) => setEmploymentTypes(employmentTypes))
+      .catch(() => showToast("Failed to load employment types.", "error"));
+
+    fetchAllDesignations()
+      .then((data) => setDesignations(data))
+      .catch(() => showToast("Failed to load designations.", "error"));
+  }, []);
+
+  const handleProfilePic = (e) => {
+    const file = e.target.files[0];
+    if (!file) return;
+    setProfilePic(file);
+    setProfilePreview(URL.createObjectURL(file));
+  };
 
   const showToast = (message, type = "success") => {
     setToast({ message, type });
@@ -282,22 +207,46 @@ export default function EmployeeManagement() {
     if (errors[name]) setErrors((prev) => ({ ...prev, [name]: "" }));
   };
 
-  // ── Designation change — triggers auto-fill ──
-  const handleDesignationChange = (e) => {
-    const value = e.target.value;
-    setFormData((prev) => ({ ...prev, designation: value }));
-    setResolved(null);
-    if (errors.designation) setErrors((prev) => ({ ...prev, designation: "" }));
+ const handleDesignationChange = async (e) => {
+   const value = e.target.value;
+   setFormData((prev) => ({ ...prev, designation: value }));
+   setResolved(null);
+   if (errors.designation) setErrors((prev) => ({ ...prev, designation: "" }));
 
-    if (!value) return;
+   if (!value) return;
 
-    setLoadingDesignation(true);
-    // Simulate API call delay
-    setTimeout(() => {
-      setResolved(DESIGNATION_MAP[value] || null);
-      setLoadingDesignation(false);
-    }, 500);
-  };
+   const selected = designations.find((d) => String(d.id) === String(value));
+   if (!selected) return;
+
+   setLoadingDesignation(true);
+   try {
+     // Step 1: get department to find leavePolicyId
+     const departments = await fetchAllDepartments();
+     const dept = departments.find((d) => String(d.id) === String(selected.departmentId));
+
+     if (!dept || !dept.leavePolicyId) {
+       setResolved({ department: selected.department, leavePolicy: "—", leaves: [] });
+       return;
+     }
+
+     // Step 2: fetch the actual policy with allocations
+     const policy = await fetchPolicyById(dept.leavePolicyId);
+
+     setResolved({
+       department: selected.department,
+       leavePolicy: policy.name,
+       leaves: policy.allocations.map((a) => ({
+         type: a.leaveTypeName,
+         days: a.days,
+       })),
+     });
+   } catch {
+     showToast("Failed to load designation details.", "error");
+     setResolved(null);
+   } finally {
+     setLoadingDesignation(false);
+   }
+ };
 
   // ── Validation ──
   const validate = () => {
@@ -315,30 +264,40 @@ export default function EmployeeManagement() {
     return newErrors;
   };
 
-  // ── Form submit ──
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    const newErrors = validate();
-    if (Object.keys(newErrors).length > 0) {
-      setErrors(newErrors);
-      showToast("Please fill all required fields.", "error");
-      return;
-    }
-    if (!resolved) {
-      showToast("Designation data not loaded yet.", "error");
-      return;
-    }
+ const handleSubmit = async (e) => {
+   e.preventDefault();
+   const newErrors = validate();
+   if (Object.keys(newErrors).length > 0) {
+     setErrors(newErrors);
+     showToast("Please fill all required fields.", "error");
+     return;
+   }
+   if (!resolved) {
+     showToast("Designation data not loaded yet.", "error");
+     return;
+   }
+    
+   setSubmitting(true);
+   try {
+       const created = await createEmployee(formData, profilePic);
 
-    setSubmitting(true);
-    // Simulate API call
-    setTimeout(() => {
-      const empId = "EMP" + String(Math.floor(10000 + Math.random() * 90000)).slice(0, 5);
-      setSubmitting(false);
-      setSuccessModal({ employeeId: empId });
-    }, 1800);
-  };
+       // ✅ Clear profile pic immediately after successful upload
+       setProfilePic(null);
+       setProfilePreview(null);
 
-  // ── Reset for "Create Another" ──
+       setSuccessModal({ employeeId: created.employeeId, id: created.id });
+       showToast("Employee created successfully!", "success");
+     } catch (err) {
+       const message =
+         err?.response?.data?.message ||
+         err?.response?.data?.error ||
+         "Failed to create employee. Please try again.";
+       showToast(message, "error");
+     } finally {
+       setSubmitting(false);
+     }
+   };
+
   const resetForm = () => {
     setFormData({
       fullName: "",
@@ -351,6 +310,17 @@ export default function EmployeeManagement() {
     setResolved(null);
     setErrors({});
     setSuccessModal(null);
+    setProfilePic(null);        // ✅ clear file
+    setProfilePreview(null);    // ✅ clear preview
+  };
+
+  const getLeaveIcon = (type = "") => {
+    const t = type.toLowerCase();
+    if (t.includes("sick"))    return "🤒";
+    if (t.includes("casual"))  return "☀️";
+    if (t.includes("earned") || t.includes("annual")) return "🏖️";
+    if (t.includes("maternity") || t.includes("paternity")) return "👶";
+    return "📅";
   };
 
   const isFormReady =
@@ -359,10 +329,10 @@ export default function EmployeeManagement() {
     formData.phoneNumber.trim() &&
     formData.dateOfJoining &&
     formData.employmentType &&
-    formData.designation &&
-    resolved;
+    formData.designation;
 
   return (
+
     <div className="em-main">
       {/* ── Toast ── */}
       {toast && (
@@ -373,7 +343,6 @@ export default function EmployeeManagement() {
         />
       )}
 
-      {/* ── Success Modal ── */}
       {successModal && (
         <SuccessModal
           employeeId={successModal.employeeId}
@@ -385,7 +354,6 @@ export default function EmployeeManagement() {
         />
       )}
 
-      {/* ── Page Header ── */}
       <header className="em-header">
         <div>
           <h1 className="em-page-title">Add New Employee</h1>
@@ -404,25 +372,10 @@ export default function EmployeeManagement() {
         </div>
       </header>
 
-      {/* ── Main Card ── */}
       <div className="em-card">
-
-        {/* Admin Row */}
-        <div className="em-admin-row">
-          <div className="em-admin-info">
-            <div className="em-avatar">A</div>
-            <div>
-              <div className="em-admin-name">Admin</div>
-              <div className="em-admin-id">hx170000</div>
-              <span className="em-badge-admin">ADMIN</span>
-            </div>
-          </div>
-          <div className="em-fy-badge">FY 2025–26</div>
-        </div>
 
         <form onSubmit={handleSubmit} noValidate>
 
-          {/* ══════════════ SECTION 1: Employee Information ══════════════ */}
           <div className="em-section-header">
             <span className="em-step-num">1</span>
             <div>
@@ -431,7 +384,64 @@ export default function EmployeeManagement() {
             </div>
           </div>
 
-          {/* Row 1: Full Name · Official Email · Phone Number */}
+          <div className="em-avatar-upload">
+            <div className="em-avatar-circle">
+              {profilePreview
+                ? <img src={profilePreview} alt="Profile" className="em-avatar-img" />
+                : <span className="em-avatar-initial">
+                    {formData.fullName?.[0]?.toUpperCase() || (
+                      <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="1.5">
+                        <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/>
+                        <circle cx="12" cy="7" r="4"/>
+                      </svg>
+                    )}
+                  </span>
+              }
+              <label className="em-avatar-overlay" htmlFor="em-profile-pic" title="Upload photo">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="2">
+                  <path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"/>
+                  <circle cx="12" cy="13" r="4"/>
+                </svg>
+                <span>Change</span>
+              </label>
+              <input
+                id="em-profile-pic"
+                type="file"
+                accept="image/*"
+                className="em-avatar-file-input"
+                onChange={handleProfilePic}
+              />
+            </div>
+
+            <div className="em-avatar-info">
+              <p className="em-avatar-title">Profile Photo</p>
+              <div className="em-avatar-actions">
+                <label htmlFor="em-profile-pic" className="em-avatar-btn em-avatar-btn-upload">
+                  <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5">
+                    <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
+                    <polyline points="17 8 12 3 7 8"/>
+                    <line x1="12" y1="3" x2="12" y2="15"/>
+                  </svg>
+                  {profilePreview ? "Change Photo" : "Upload Photo"}
+                </label>
+                {profilePreview && (
+                  <button
+                    type="button"
+                    className="em-avatar-btn em-avatar-btn-remove"
+                    onClick={() => { setProfilePic(null); setProfilePreview(null); }}
+                  >
+                    <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5">
+                      <polyline points="3 6 5 6 21 6"/>
+                      <path d="M19 6l-1 14a2 2 0 0 1-2 2H8a2 2 0 0 1-2-2L5 6"/>
+                      <path d="M10 11v6M14 11v6"/>
+                    </svg>
+                    Remove
+                  </button>
+                )}
+              </div>
+            </div>
+          </div>
+
           <div className="em-form-grid em-grid-3">
             {/* Full Name */}
             <div className={`em-field${errors.fullName ? " em-field-error" : ""}`}>
@@ -454,7 +464,6 @@ export default function EmployeeManagement() {
               {errors.fullName && <span className="em-error-msg">{errors.fullName}</span>}
             </div>
 
-            {/* Official Email */}
             <div className={`em-field${errors.officialEmail ? " em-field-error" : ""}`}>
               <label className="em-label" htmlFor="officialEmail">
                 Official Email <span className="em-required">*</span>
@@ -475,7 +484,6 @@ export default function EmployeeManagement() {
               {errors.officialEmail && <span className="em-error-msg">{errors.officialEmail}</span>}
             </div>
 
-            {/* Phone Number */}
             <div className={`em-field${errors.phoneNumber ? " em-field-error" : ""}`}>
               <label className="em-label" htmlFor="phoneNumber">
                 Phone Number <span className="em-required">*</span>
@@ -497,7 +505,6 @@ export default function EmployeeManagement() {
             </div>
           </div>
 
-          {/* Row 2: Date of Joining · Employment Type · Designation */}
           <div className="em-form-grid em-grid-3">
             {/* Date of Joining */}
             <div className={`em-field${errors.dateOfJoining ? " em-field-error" : ""}`}>
@@ -513,12 +520,12 @@ export default function EmployeeManagement() {
                   name="dateOfJoining"
                   value={formData.dateOfJoining}
                   onChange={handleChange}
+                   min={new Date().toISOString().split("T")[0]}
                 />
               </div>
               {errors.dateOfJoining && <span className="em-error-msg">{errors.dateOfJoining}</span>}
             </div>
 
-            {/* Employment Type */}
             <div className={`em-field${errors.employmentType ? " em-field-error" : ""}`}>
               <label className="em-label" htmlFor="employmentType">
                 Employment Type <span className="em-required">*</span>
@@ -533,17 +540,16 @@ export default function EmployeeManagement() {
                   onChange={handleChange}
                 >
                   <option value="">Select type</option>
-                  <option value="Permanent">Permanent</option>
-                  <option value="Contract">Contract</option>
-                  <option value="Intern">Intern</option>
-                  <option value="Probation">Probation</option>
-                  <option value="Consultant">Consultant</option>
+                  {employmentTypes.map((et) => (
+                    <option key={et.id} value={et.id}>
+                      {et.name}
+                    </option>
+                  ))}
                 </select>
               </div>
               {errors.employmentType && <span className="em-error-msg">{errors.employmentType}</span>}
             </div>
 
-            {/* Designation */}
             <div className={`em-field${errors.designation ? " em-field-error" : ""}`}>
               <label className="em-label" htmlFor="designation">
                 Designation <span className="em-required">*</span>
@@ -558,8 +564,10 @@ export default function EmployeeManagement() {
                   onChange={handleDesignationChange}
                 >
                   <option value="">Select designation</option>
-                  {Object.keys(DESIGNATION_MAP).map((d) => (
-                    <option key={d} value={d}>{d}</option>
+                  {designations.map((d) => (
+                    <option key={d.id} value={d.id}>
+                      {d.name}
+                    </option>
                   ))}
                 </select>
               </div>
@@ -567,7 +575,6 @@ export default function EmployeeManagement() {
             </div>
           </div>
 
-          {/* ══════════════ SECTION 2: Organization Assignment ══════════════ */}
           <div className="em-section-header em-section-header-mt">
             <span className="em-step-num">2</span>
             <div>
@@ -577,7 +584,6 @@ export default function EmployeeManagement() {
           </div>
 
           <div className="em-form-grid em-grid-2">
-            {/* Department (read-only) */}
             <div className="em-field">
               <label className="em-label">
                 Department
@@ -599,7 +605,6 @@ export default function EmployeeManagement() {
               </div>
             </div>
 
-            {/* Leave Policy (read-only) */}
             <div className="em-field">
               <label className="em-label">
                 Leave Policy
@@ -622,7 +627,6 @@ export default function EmployeeManagement() {
             </div>
           </div>
 
-          {/* ══════════════ SECTION 3: Leave Allocation Preview ══════════════ */}
           <div className="em-section-header em-section-header-mt">
             <span className="em-step-num">3</span>
             <div>
@@ -631,7 +635,6 @@ export default function EmployeeManagement() {
             </div>
           </div>
 
-          {/* Leave Allocation Area */}
           {loadingDesignation ? (
             <div className="em-leave-grid">
               {[1, 2, 3, 4].map((i) => (
@@ -665,7 +668,6 @@ export default function EmployeeManagement() {
             </div>
           )}
 
-          {/* ══════════════ Submit ══════════════ */}
           <div className="em-submit-row">
             <button
               type="submit"

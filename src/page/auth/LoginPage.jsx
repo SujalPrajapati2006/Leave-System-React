@@ -267,16 +267,16 @@ export default function LoginPage() {
             ))}
           </div>
 
-{/*           <p className="login-signup-prompt"> */}
-{/*             Don't have an account?{" "} */}
-{/*             <button */}
-{/*               className="login-link login-link--btn" */}
-{/*               onClick={() => navigate("/signup")} */}
-{/*               disabled={loading} */}
-{/*             > */}
-{/*               Sign Up */}
-{/*             </button> */}
-{/*           </p> */}
+           <p className="login-signup-prompt">
+             Don't have an account?{" "}
+             <button
+               className="login-link login-link--btn"
+               onClick={() => navigate("/signup")}
+               disabled={loading}
+             >
+               Sign Up
+             </button>
+           </p>
         </div>
       </div>
     </div>
