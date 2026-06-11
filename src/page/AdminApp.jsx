@@ -5,6 +5,7 @@ import AdminHeader from "../components/layout/AdminHeader";
 import AdminDashboard from "./AdminDashboard/AdminDashboard";
 import authApi, { authState } from "../api/authApi";
 import EmployeeManagement from "./EmployeeManagement/EmployeeManagement";
+import EmployeeList from "./EmployeeList/EmployeeList";
 import PolicyConfig from "./PolicyConfig/PolicyConfig";
 import "./AdminApp.css";
 
@@ -23,12 +24,25 @@ export default function AdminApp() {
   const [activePage, setActivePage] = useState("dashboard");
   const [showLogoutModal, setShowLogoutModal] = useState(false);
   const [logoutLoading,   setLogoutLoading]   = useState(false);
+  const [viewEmployeeId,  setViewEmployeeId]  = useState(null);
 
   const pages = {
-    dashboard: <AdminDashboard />,
-    "employee-management": <EmployeeManagement onAddEmployee={() => setActivePage("dashboard")} />,
-    "policy-config":       <PolicyConfig />,
-  };
+      dashboard: <AdminDashboard />,
+      "employee-management": (
+        <EmployeeManagement
+          onEmployeeCreated={(id) => {
+            setViewEmployeeId(id);
+            setActivePage("employee-list");
+          }}
+        />
+      ),
+      "employee-list": (
+        <EmployeeList
+          highlightId={viewEmployeeId}
+        />
+      ),
+      "policy-config": <PolicyConfig />,
+    };
 
   const handleLogout = async () => {
     setLogoutLoading(true);

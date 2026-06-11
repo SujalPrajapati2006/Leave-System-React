@@ -63,7 +63,7 @@ export async function createEmployee(form, profilePicFile) {
 
   const res = await api.post("/employees", formData, {
     headers: {
-      "Content-Type": undefined,  // let browser set multipart boundary
+      "Content-Type": undefined,
     },
   });
 
@@ -104,14 +104,27 @@ export async function fetchEmployeeById(id) {
 /**
  * PUT /employees/:id
  */
-export async function updateEmployee(id, form) {
-  const res = await api.put(`${ENDPOINT}/${id}`, uiToApi(form));
+export async function updateEmployee(id, form, profilePicFile) {
+  const formData = new FormData();
+
+  formData.append("fullName",         form.fullName?.trim());
+  formData.append("email",            form.email?.trim().toLowerCase());
+  formData.append("phoneNumber",      form.phoneNumber?.trim());
+  formData.append("joiningDate",      form.joiningDate);
+  formData.append("employmentTypeId", Number(form.employmentTypeId));
+  formData.append("designationId",    Number(form.designationId));
+
+  if (profilePicFile) {
+    formData.append("profilePicture", profilePicFile);
+  }
+
+  const res = await api.put(`${ENDPOINT}/${id}`, formData, {
+    headers: { "Content-Type": undefined },
+  });
+
   return apiToUi(res.data);
 }
 
-/**
- * DELETE /employees/:id
- */
 export async function deleteEmployee(id) {
   await api.delete(`${ENDPOINT}/${id}`);
 }

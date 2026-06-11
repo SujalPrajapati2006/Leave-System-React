@@ -6,6 +6,7 @@ const navItems = [
     items: [
       { id: "dashboard", label: "Dashboard", icon: "⊞" },
       { id: "employee-management", label: "Employee Management", icon: "👤" },
+      { id: "employee-list",       label: "Employee List",       icon: "👥" },
       { id: "leave-approvals", label: "Leave Approvals", icon: "✓", badge: 3 },
       { id: "reports-analytics", label: "Reports & Analytics", icon: "▦" },
       { id: "policy-config", label: "Policy Config", icon: "⚙" },

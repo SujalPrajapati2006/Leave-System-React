@@ -50,7 +50,6 @@ export default function AdminDashboard() {
           <div className="profile-avatar">A</div>
           <div className="profile-info">
             <div className="profile-name">Admin</div>
-            <div className="profile-id">hx170000</div>
             <span className="badge badge-teal">ADMIN</span>
           </div>
         </div>

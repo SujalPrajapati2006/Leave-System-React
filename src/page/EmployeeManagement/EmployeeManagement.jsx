@@ -155,7 +155,7 @@ const SuccessModal = ({ employeeId, onViewEmployee, onCreateAnother }) => (
 );
 
 // ─── Main component ───────────────────────────────────────────────────────────
-export default function EmployeeManagement() {
+export default function EmployeeManagement({ onEmployeeCreated }) {
   const [formData, setFormData] = useState({
     fullName: "",
     officialEmail: "",
@@ -348,7 +348,7 @@ export default function EmployeeManagement() {
           employeeId={successModal.employeeId}
           onViewEmployee={() => {
             setSuccessModal(null);
-            showToast(`Navigating to ${successModal.employeeId}…`);
+            onEmployeeCreated?.(successModal.id);
           }}
           onCreateAnother={resetForm}
         />
@@ -520,7 +520,7 @@ export default function EmployeeManagement() {
                   name="dateOfJoining"
                   value={formData.dateOfJoining}
                   onChange={handleChange}
-                   min={new Date().toISOString().split("T")[0]}
+                  min={new Date().toISOString().split("T")[0]}
                 />
               </div>
               {errors.dateOfJoining && <span className="em-error-msg">{errors.dateOfJoining}</span>}

@@ -98,7 +98,7 @@ export default function Dashboard() {
   const [activeMenu, setActiveMenu] = useState("home");
   const [animated,   setAnimated]   = useState(false);
   const [user, setUser] = useState({
-    name: "John Doe", employeeId: "hx170000", role: "Employee", initials: "JD",
+    name: "John Doe", role: "Employee", initials: "JD",
   });
   const [showLogoutModal, setShowLogoutModal] = useState(false);
   const [logoutLoading,   setLogoutLoading]   = useState(false);
